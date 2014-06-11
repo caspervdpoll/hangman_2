@@ -1,7 +1,6 @@
 package com.example.twisted_hangman.sqlite.helper;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,8 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //private static final String LOG = "DatabaseHelper";
  
 	
-	private SQLiteDatabase myDataBase;
-    // Database Version
+	// Database Version
     private static final int DATABASE_VERSION = 1;
  
     // Database Name
@@ -68,13 +66,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public ArrayList<String> fillWords(InputStream words) {
 		ArrayList<String> words1;
 		words1 = new ArrayList<String>();
+		int counter = 0;
 		try {
 			InputStreamReader inputStreamReader = new InputStreamReader(words);
 			BufferedReader br = new BufferedReader(inputStreamReader);
 
 			String line;
 			while ((line = br.readLine()) != null) {
-				words1.add(line.replaceAll("\\<.*?>",""));
+				if(counter == 1000)
+					break;
+				line = line.replaceAll("\\<.*?>","");
+				line = line.replaceAll("\t", "");  
+				line = line.replaceAll("\n", "");  
+				line = line.replaceAll(" ", ""); 
+				words1.add(line);
+				counter++;
 			}
 
 			br.close();

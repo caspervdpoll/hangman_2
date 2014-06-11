@@ -1,10 +1,5 @@
 package com.example.twisted_hangman;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.example.twisted_hangman.sqlite.Words_nl;
 import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
 
 import android.support.v7.app.ActionBarActivity;
