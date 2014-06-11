@@ -146,7 +146,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	 
 	    // insert row
 	    long tag_id = db.insert(TABLE_USER, null, values);
-
+	    System.out.println(tag_id);
 	    return tag_id;
 	}
 	
@@ -173,22 +173,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public User getUserByName(String name){
 		
 		String Query = "SELECT * FROM " + TABLE_USER + " WHERE name = '" + name + "'";
-		String temp = "";
 		User user = new User();
-		
+		int temp = 0;
 		SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor c = db.rawQuery(Query, null);
 
 	    if (c.moveToFirst()) {
             do {            	 
-                 user.setID(Integer.parseInt(c.getString(0)));
+            	 temp = Integer.parseInt(c.getString(0));
+                 user.setID(temp);
                  user.setName(c.getString(1));
                  user.setDifficulty(Integer.parseInt(c.getString(2)));
                  user.setLanguage(c.getString(3));
-                 user.setWordLength(Integer.parseInt(c.getString(3)));              
+                 user.setWordLength(Integer.parseInt(c.getString(4)));              
             } while (c.moveToNext());
         }
-
+	    System.out.println(temp);
 		return user;
 	}
 
