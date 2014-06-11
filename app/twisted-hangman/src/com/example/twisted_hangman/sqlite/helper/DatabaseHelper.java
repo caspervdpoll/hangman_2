@@ -35,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_WORDS_NL = "words_nl";
 	
     private static final String CREATE_TABLE_USER = "CREATE TABLE "
-            + TABLE_USER + "(id INTEGER PRIMARY KEY, name TEXT, difficulty TEXT, language TEXT, word_length INTEGER)";
+            + TABLE_USER + "(id INTEGER PRIMARY KEY, name TEXT, difficulty INTEGER, language TEXT, word_length INTEGER)";
  
     private static final String CREATE_TABLE_STATISTICS = "CREATE TABLE "
     		+ TABLE_STATISTICS + "(id INTEGER PRIMARY KEY, played INTEGER, lost INTEGER, won INTEGER, difficulty INTEGER, user_id INTEGER)";
