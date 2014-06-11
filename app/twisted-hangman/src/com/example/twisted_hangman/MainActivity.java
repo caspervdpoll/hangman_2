@@ -1,5 +1,7 @@
 package com.example.twisted_hangman;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.twisted_hangman.sqlite.Words_nl;
@@ -26,26 +28,10 @@ public class MainActivity extends ActionBarActivity {
 	Button howToPlay;
 	DatabaseHelper db;
 	
+	
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        db = new DatabaseHelper(getApplicationContext());
-        db.fillWords();
-        //db.createWord("testen");
-        //db.createWord("poep");
-        
-        List<Words_nl> words = db.getAllWords();       
-        
-        for (Words_nl cn : words) {
-            String log = "Id: "+cn.getID()+" ,Name: " + cn.getValue() + " ,Phone: " + cn.getLetterCount();
-                // Writing Contacts to log
-            System.out.println("Name: " + log);
-        }
-        System.out.println("yolo");
-        //db.getWordById(2);
-        //db.createUser("casper", 6, "engels", 5);
-        //db.getUserByName("casper");
         
         addListenerOnButtonSingleplayer();
         addListenerOnButtonOptions();
@@ -67,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
  
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(context, newuserActivity.class);
+				Intent intent = new Intent(context, singleplayerActivity.class);
                 startActivity(intent);
 				/*
 				 if(usertable == empty) {

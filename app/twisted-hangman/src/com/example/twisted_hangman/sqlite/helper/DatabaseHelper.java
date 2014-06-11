@@ -1,26 +1,20 @@
 package com.example.twisted_hangman.sqlite.helper;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 
 import com.example.twisted_hangman.sqlite.User;
 import com.example.twisted_hangman.sqlite.Words_nl;
 
 import android.content.ContentValues;
-//import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -36,9 +30,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "hangmanDatabase.db";
  
     // Table Names
-    private static final String TABLE_USER = "users";
-    private static final String TABLE_STATISTICS = "statistics";
-    private static final String TABLE_WORDS_NL = "words_nl";
+    public static final String TABLE_USER = "users";
+    public static final String TABLE_STATISTICS = "statistics";
+    public static final String TABLE_WORDS_NL = "words_nl";
 	
     private static final String CREATE_TABLE_USER = "CREATE TABLE "
             + TABLE_USER + "(id INTEGER PRIMARY KEY, name TEXT, difficulty INTEGER, language TEXT, word_length INTEGER)";
@@ -71,30 +65,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 	}
 	
-	public void fillWords() {
-		System.out.println("FILLING DB");
-		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cur = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_WORDS_NL, null);
-        System.out.println("Cur " + cur);
-        if (cur != null) {
-            cur.moveToFirst();
-            if (cur.getInt (0) == 0) {
-            	System.out.println("YOLO2");
-            	try { 
-	            	File words = new File("words.xml");
-	            	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-	            	DocumentBuilder document = dbf.newDocumentBuilder();
-	            	Document doc = document.parse(words);
-	            	doc.getDocumentElement().normalize();
-	            	System.out.println("Root element " + doc.getDocumentElement().getNodeName());
-	            	NodeList nodeLst = doc.getElementsByTagName("item");
-	            	for(int i = 0; i < nodeLst.getLength(); i++) {
-	            		Node tmp = nodeLst.item(i);
-	            		System.out.println(tmp.toString());
-	            	}
-            	} catch(Exception e){}
-            }
-        }
+	public ArrayList<String> fillWords(InputStream words) {
+		ArrayList<String> words1;
+		words1 = new ArrayList<String>();
+		try {
+			InputStreamReader inputStreamReader = new InputStreamReader(words);
+			BufferedReader br = new BufferedReader(inputStreamReader);
+
+			String line;
+			while ((line = br.readLine()) != null) {
+				words1.add(line.replaceAll("\\<.*?>",""));
+			}
+
+			br.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return words1;
 	}
 	/*
 	 * fetch all words
