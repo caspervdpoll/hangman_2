@@ -31,7 +31,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         
         db = new DatabaseHelper(getApplicationContext());
-        
+        db.fillWords();
         //db.createWord("testen");
         //db.createWord("poep");
         
@@ -43,9 +43,9 @@ public class MainActivity extends ActionBarActivity {
             System.out.println("Name: " + log);
         }
         System.out.println("yolo");
-        db.getWordById(2);
-        db.createUser("casper", 6, "engels", 5);
-        db.getUserByName("casper");
+        //db.getWordById(2);
+        //db.createUser("casper", 6, "engels", 5);
+        //db.getUserByName("casper");
         
         addListenerOnButtonSingleplayer();
         addListenerOnButtonOptions();
