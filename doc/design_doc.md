@@ -48,13 +48,51 @@ Highscore is determined by: <br> # of tries / # number of letters
 - checkWord(string word, string guess)
 - showCoffin()
 
-###Database handler class
 
-- connect()
-  return database
-- disconnect(database)
-  return SUCCES or ERROR
-- change\_user(int user\_id)
+
+###Database classes
+
+####Statistics CLass
+
+- primitive
+
+- setID
+- getID
+- setPLayed
+- getPLayed
+- setWon
+- getWon
+- setLost
+- getLost
+- setUserId
+- getUserId
+
+####User Class
+
+- primitive
+
+- setID
+- getID
+- setName
+- getName
+- setDifficulty
+- getDifficulty
+- setLanguage
+- getLanguage
+- setWordLength
+- getWordLength
+
+####handler class
+
+- primitive
+
+- onCreate
+- onUpgrade
+- fillWords
+- getAllWords
+- getAllUsers
+- createUser
+- getUserByName
 
 ###Activities
 
@@ -63,6 +101,21 @@ Highscore is determined by: <br> # of tries / # number of letters
 
 - Singleplayer Activity
   * Is the game screen for singleplayer and will contain functions for drawing and changing the scene when needed.
+
+- Statistics Activity
+  * Is the screen in which the statistics are shown.
+
+- ChooseUserActivity
+  * is the screen where a user can be selected.
+
+- HowToPlayActivity
+  * Is the screen where all the necessairy information is shown.
+
+- NewUserActivity
+  * Is where a new User can be created.
+
+- OptionsActivity
+  * Is where the options en preferences are shown.
 
 ## App design ##
 
