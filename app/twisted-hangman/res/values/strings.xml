@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Twisted Hangman</string>
+    <string name="action_settings">Settings</string>
+    
+    <color name="blue">#0099CC</color>
+	<color name="darkBlue">#000033</color>
+	<color name="white">#FFFFFF</color>
+	<color name="grey">#CCCCCC</color>
+	
+</resources>
