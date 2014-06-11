@@ -1,5 +1,8 @@
 package com.example.twisted_hangman;
 
+import java.util.List;
+
+import com.example.twisted_hangman.sqlite.Words_nl;
 import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
 
 import android.support.v7.app.ActionBarActivity;
@@ -32,15 +35,17 @@ public class MainActivity extends ActionBarActivity {
         //db.createWord("testen");
         //db.createWord("poep");
         
-        /*List<Words_nl> words = db.getAllWords();       
+        List<Words_nl> words = db.getAllWords();       
         
         for (Words_nl cn : words) {
             String log = "Id: "+cn.getID()+" ,Name: " + cn.getValue() + " ,Phone: " + cn.getLetterCount();
                 // Writing Contacts to log
             System.out.println("Name: " + log);
-        }*/
+        }
         System.out.println("yolo");
-        //db.getWordById(3);
+        db.getWordById(2);
+        db.createUser("casper", 6, "engels", 5);
+        db.getUserByName("casper");
         
         addListenerOnButtonSingleplayer();
         addListenerOnButtonOptions();
