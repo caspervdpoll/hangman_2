@@ -154,17 +154,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	 * fetch word by id
 	 */
 	
-	/*public Words_nl getWordById(int id){
-		Words_nl word = new Words_nl();
+	public String getWordById(int id){
 		
-		String Query = "SELECT * FROM TABLE_WORDS_NL WHERE id == " + id;
+		String Query = "SELECT * FROM " + TABLE_WORDS_NL + " WHERE id = '" + id + "'";
+		String temp = "";
+		SQLiteDatabase db = this.getReadableDatabase();
+	    Cursor c = db.rawQuery(Query, null);
+
+	    if (c.moveToFirst()) {
+            do {
+                temp = c.getString(1);              
+            } while (c.moveToNext());
+        }
+
+		return temp;
+	}
+	
+	public User getUserByName(String name){
+		
+		String Query = "SELECT * FROM " + TABLE_USER + " WHERE name = '" + name + "'";
+		String temp = "";
+		User user = new User();
 		
 		SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor c = db.rawQuery(Query, null);
-	    
-	    System.out.println(c);
-		
-		return word;
-	}*/
+
+	    if (c.moveToFirst()) {
+            do {            	 
+                 user.setID(Integer.parseInt(c.getString(0)));
+                 user.setName(c.getString(1));
+                 user.setDifficulty(Integer.parseInt(c.getString(2)));
+                 user.setLanguage(c.getString(3));
+                 user.setWordLength(Integer.parseInt(c.getString(3)));              
+            } while (c.moveToNext());
+        }
+
+		return user;
+	}
 
 }
