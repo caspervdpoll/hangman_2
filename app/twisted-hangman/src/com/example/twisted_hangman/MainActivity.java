@@ -1,5 +1,7 @@
 package com.example.twisted_hangman;
 
+import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
+
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -19,10 +21,27 @@ public class MainActivity extends ActionBarActivity {
 	Button options;
 	Button statistics;
 	Button howToPlay;
+	DatabaseHelper db;
 	
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        db = new DatabaseHelper(getApplicationContext());
+        
+        //db.createWord("testen");
+        //db.createWord("poep");
+        
+        /*List<Words_nl> words = db.getAllWords();       
+        
+        for (Words_nl cn : words) {
+            String log = "Id: "+cn.getID()+" ,Name: " + cn.getValue() + " ,Phone: " + cn.getLetterCount();
+                // Writing Contacts to log
+            System.out.println("Name: " + log);
+        }*/
+        System.out.println("yolo");
+        //db.getWordById(3);
+        
         addListenerOnButtonSingleplayer();
         addListenerOnButtonOptions();
         addListenerOnButtonStatistics();
