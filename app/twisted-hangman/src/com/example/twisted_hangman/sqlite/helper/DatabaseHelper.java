@@ -1,9 +1,20 @@
 package com.example.twisted_hangman.sqlite.helper;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.twisted_hangman.sqlite.User;
 import com.example.twisted_hangman.sqlite.Words_nl;
 
+
+
+
+
+
+import android.content.ContentValues;
 //import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -13,10 +24,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //private static final String LOG = "DatabaseHelper";
  
     // Database Version
-    //private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 1;
  
     // Database Name
-    //private static final String DATABASE_NAME = "hangmanDatabase";
+    private static final String DATABASE_NAME = "hangmanDatabase";
  
     // Table Names
     private static final String TABLE_USER = "users";
@@ -32,16 +43,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_WORDS_NL = "CREATE TABLE "
             + TABLE_WORDS_NL + "(id INTEGER PRIMARY KEY, value TEXT, letter_count INTEGER)";
     
-    
-	public DatabaseHelper(Context context, String name, CursorFactory factory,
-			int version) {
-		super(context, name, factory, version);
-		// TODO Auto-generated constructor stub
-	}
+	public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// TODO Auto-generated method stub
 		db.execSQL(CREATE_TABLE_USER);
         db.execSQL(CREATE_TABLE_STATISTICS);
         db.execSQL(CREATE_TABLE_WORDS_NL);
@@ -57,21 +64,107 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
 		
 	}
+	/*
+	 * fetch all words
+	 */
+	public List<Words_nl> getAllWords() { 
+        List<Words_nl> wordList = new ArrayList<Words_nl>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_WORDS_NL;
+ 
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        
+        if (cursor.moveToFirst()) {
+            do {
+                Words_nl word = new Words_nl();
+                word.setID(Integer.parseInt(cursor.getString(0)));
+                word.setValue(cursor.getString(1));
+                word.setLetterCount(Integer.parseInt(cursor.getString(2)));
+                // Adding contact to list
+                wordList.add(word);
+            } while (cursor.moveToNext());
+        }
+        
+        return wordList;
+	}
+	
+	public List<User> getAllUsers() { 
+        List<User> userList = new ArrayList<User>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_USER;
+ 
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        
+        if (cursor.moveToFirst()) {
+            do {
+                User user = new User();
+                user.setID(Integer.parseInt(cursor.getString(0)));
+                user.setName(cursor.getString(1));
+                user.setDifficulty(Integer.parseInt(cursor.getString(2)));
+                user.setLanguage(cursor.getString(3));
+                user.setWordLength(Integer.parseInt(cursor.getString(3)));
+                // Adding contact to list
+                userList.add(user);
+            } while (cursor.moveToNext());
+        }
+        
+        return userList;
+	}
 	
 	/*
-	 * Creating tag
+	 * Creating wordtag
 	 */
-	public long createTag(Words_nl word) {
-	    //SQLiteDatabase db = this.getWritableDatabase();
+	public long createWord(String word) {
+	    SQLiteDatabase db = this.getWritableDatabase();
 	 
-	    //ContentValues values = new ContentValues();
-	    System.out.println(word);
-	    //values.put("value", word);
-	    //values.put(KEY_CREATED_AT, getDateTime());
+	    ContentValues values = new ContentValues();
+	    int length = word.length();
+	    
+	    values.put("value", word);
+	    values.put("letter_count", length);
 	 
 	    // insert row
-	    //long tag_id = db.insert(TABLE_TAG, null, values);
-	    int id = 1;
-	    return id;
+	    long tag_id = db.insert(TABLE_WORDS_NL, null, values);
+
+	    return tag_id;
 	}
+	
+	public long createUser(String name, int difficulty, String language, int word_length){
+		SQLiteDatabase db = this.getWritableDatabase();		 
+	    ContentValues values = new ContentValues();
+	    
+	    values.put("name", name);
+	    values.put("difficulty", difficulty);
+	    values.put("language", language);
+	    if(word_length != 0){
+	    	values.put("word_length", word_length);
+	    } else {
+	    	values.put("word_length", 6);
+	    }
+	 
+	    // insert row
+	    long tag_id = db.insert(TABLE_USER, null, values);
+
+	    return tag_id;
+	}
+	
+	/*
+	 * fetch word by id
+	 */
+	
+	/*public Words_nl getWordById(int id){
+		Words_nl word = new Words_nl();
+		
+		String Query = "SELECT * FROM TABLE_WORDS_NL WHERE id == " + id;
+		
+		SQLiteDatabase db = this.getReadableDatabase();
+	    Cursor c = db.rawQuery(Query, null);
+	    
+	    System.out.println(c);
+		
+		return word;
+	}*/
+
 }
