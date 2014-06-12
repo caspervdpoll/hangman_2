@@ -213,11 +213,15 @@ public class singleplayerActivity extends ActionBarActivity {
    		
    		if(yes.size() > no.size()) {
    			pressed.setTextColor(Color.GREEN);
+   			pressed.setEnabled(false);
+   			pressed.setBackgroundColor(Color.GRAY);
    			result = filterOnChar(yes, input);
    			return result;
    		}
    		
    		pressed.setTextColor(Color.RED);
+   		pressed.setEnabled(false);
+   		pressed.setBackgroundColor(Color.GRAY);
    		if(nrOfFaults++ < 9)
    			updateHangman(nrOfFaults);
    		else 
