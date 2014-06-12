@@ -48,6 +48,14 @@ Highscore is determined by: <br> # of tries / # number of letters
 - checkWord(string word, string guess)
 - showCoffin()
 
+### Good game class ###
+
+- Consists of functions related to the normal hangman principle
+
+### Evil game class ###
+
+- Consists of functions related to the evil hangman principle
+
 
 
 ###Database classes
@@ -114,7 +122,7 @@ Highscore is determined by: <br> # of tries / # number of letters
 - NewUserActivity
   * Is where a new User can be created.
 
-- OptionsActivity
+- PreferenceActivity
   * Is where the options en preferences are shown.
 
 ## App design ##
