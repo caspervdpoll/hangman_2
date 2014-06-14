@@ -20,9 +20,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-	 // Logcat tag
-    //private static final String LOG = "DatabaseHelper";
-	//The Android's default system path of your application database.
+
     private static String DB_PATH = "/data/data/com.example.twisted_hangman/databases/";
     private static String DB_NAME = "hangman";
     private SQLiteDatabase myDataBase; 
@@ -39,12 +37,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void createDataBase() throws IOException{
  
     	boolean dbExist = checkDataBase();
-    	//copyDataBase();
+    	//copyDataBase(); //Uncomment this when the database already exists, but isn't filled
     	if(dbExist){
-    	}else{
- 
-    		//By calling this method and empty database will be created into the default system path
-               //of your application so we are gonna be able to overwrite that database with our database.
+    		//Database exists
+    	} else {
         	try {
     			copyDataBase();
     		} catch (IOException e) {
@@ -62,21 +58,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
  
     	SQLiteDatabase checkDB = null;
  
-    	try{
+    	try {
     		String myPath = DB_PATH + DB_NAME;
     		checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
  
-    	}catch(SQLiteException e){
- 
-    		//database does't exist yet.
- 
+    	} catch(SQLiteException e) {
+    		e.printStackTrace();
     	}
  
-    	if(checkDB != null){
- 
+    	if(checkDB != null)
     		checkDB.close();
- 
-    	}
  
     	return checkDB != null ? true : false;
     }
@@ -112,11 +103,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
  }
 	 
     public void openDataBase() throws SQLException{
- 
-    	//Open the database
         String myPath = DB_PATH + DB_NAME;
     	myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
- 
     }
 	 
     @Override
@@ -126,22 +114,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     		    myDataBase.close();
  
     	    super.close();
- 
 	}
  
 	@Override
-	public void onCreate(SQLiteDatabase db) {
- 
-	}
+	public void onCreate(SQLiteDatabase db) {}
  
 	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
- 
-	}
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 	 
-	        // Add your public helper methods to access and get content from the database.
-	       // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
-	       // to you to create adapters for your views.
 	public ArrayList<String> getAllWords() { 
         ArrayList<String> wordList = new ArrayList<String>();
         // Select All Query
@@ -155,7 +135,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Words_nl word = new Words_nl();
                 word.setID(Integer.parseInt(cursor.getString(0)));
                 word.setValue(cursor.getString(1));
-                // Adding contact to list
                 wordList.add(word.getValue());
             } while (cursor.moveToNext());
         }
@@ -163,10 +142,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return wordList;
 	}
 	
-	public List<User> getAllUsers() { 
-        List<User> userList = new ArrayList<User>();
+	public ArrayList<User> getAllUsers() { 
+        ArrayList<User> userList = new ArrayList<User>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM ";
+        String selectQuery = "SELECT  * FROM users";
  
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -179,7 +158,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 user.setDifficulty(Integer.parseInt(cursor.getString(2)));
                 user.setLanguage(cursor.getString(3));
                 user.setWordLength(Integer.parseInt(cursor.getString(4)));
-                // Adding contact to list
                 userList.add(user);
             } while (cursor.moveToNext());
         }
@@ -199,9 +177,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    values.put("value", word);
 	    values.put("letter_count", length);
 	 
-	    // insert row
-	    //long tag_id = db.insert(TABLE_WORDS_NL, null, values);
-
 	    return 1;
 	}
 	
@@ -264,14 +239,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 	    System.out.println(temp);
 		return user;
-	}
-
-	/*public void openDataBase() throws SQLException{
-		 
-    	//Open the database
-        String myPath = DB_PATH + DB_NAME;
-    	myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
- 
-    }*/
-	
+	}	
 }

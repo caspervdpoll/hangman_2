@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".howToPlayActivity" >
+            android:name=".howtoplayActivity" >
         </activity>
         <activity
             android:label="@string/app_name"

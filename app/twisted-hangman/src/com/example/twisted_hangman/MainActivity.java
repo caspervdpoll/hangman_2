@@ -27,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        System.out.println("yolo");
+
         addListenerOnButtonSingleplayer();
         addListenerOnButtonOptions();
         addListenerOnButtonStatistics();
@@ -48,22 +48,10 @@ public class MainActivity extends ActionBarActivity {
  
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(context, singleplayerActivity.class);
+				Intent intent = new Intent(context, chooseuserActivity.class);
                 startActivity(intent);
-				/*
-				 if(usertable == empty) {
-			    	Intent intent = new Intent(context, newuserActivity.class);
-                    startActivity(intent);
-                 } else {
-                 	Intent intent = new Intent(context, chooseuserActivity.class);
-                    startActivity(intent);
-                 }
- 				*/
- 
 			}
- 
 		});
- 
 	}
 
     public void addListenerOnButtonOptions() {
@@ -77,9 +65,7 @@ public class MainActivity extends ActionBarActivity {
                             startActivity(intent);   
  
 			}
- 
 		});
- 
 	}
 
     public void addListenerOnButtonStatistics() {
@@ -93,9 +79,7 @@ public class MainActivity extends ActionBarActivity {
                             startActivity(intent);   
  
 			}
- 
 		});
- 
 	}
 
     public void addListenerOnButtonHowToPlay() {
@@ -109,9 +93,7 @@ public class MainActivity extends ActionBarActivity {
                             startActivity(intent);   
  
 			}
- 
 		});
- 
 	}
     
     @Override

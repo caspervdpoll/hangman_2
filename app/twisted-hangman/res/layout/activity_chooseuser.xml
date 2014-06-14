@@ -9,10 +9,34 @@
     tools:ignore="MergeRootFrame" >
 
 
-    <TextView
-        android:id="@+id/textView1"
+    <ListView
+        android:id="@+id/listview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CHOOSE USER" />
+        android:text="@+id/label"
+        android:background="@color/darkBlue"
+        android:textSize="30sp"
+        android:layout_marginBottom="70dp" >
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="bottom" >
+
+        <Button
+            android:id="@+id/new_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15sp"
+            android:layout_marginRight="15sp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded"
+            android:text="Add new user"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+    </LinearLayout>
 
 </RelativeLayout>
