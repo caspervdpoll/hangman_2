@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
+import com.example.twisted_hangman.sqlite.Words_nl;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -30,8 +34,14 @@ public class singleplayerActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_singleplayer);
 		
-		db = new DatabaseHelper(getApplicationContext(), null, null, nrOfFaults);
-        
+		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
+		try {
+			db.createDataBase();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		words = db.getAllWords();
+		        
         A = (Button) findViewById(R.id.A);
         B = (Button) findViewById(R.id.B);
         C = (Button) findViewById(R.id.C);
@@ -62,8 +72,8 @@ public class singleplayerActivity extends ActionBarActivity {
         hangman = (ImageView) findViewById(R.id.hangman);
         
         words = filterWordsOnLength(words, 5);
-        for(int i = 0; i < words.size(); i++)
-        	System.out.println(words.get(i).toString());
+        //for(int i = 0; i < words.size(); i++)
+        	//System.out.println(words.get(i).toString());
         
         String wordToPrint = ""; 
         for(int i = 0; i < 5; i++)
@@ -164,8 +174,7 @@ public class singleplayerActivity extends ActionBarActivity {
    			map.put(key, words);
    		}
    		
-   		//System.out.println(map);
-   		
+  		
    		for(Map.Entry<String, ArrayList<String>> entry : map.entrySet()) {
    			if(map.get(entry.getKey()).size() > max) {
    				max = map.get(entry.getKey()).size();
@@ -209,14 +218,14 @@ public class singleplayerActivity extends ActionBarActivity {
    		if(yes.size() > no.size()) {
    			pressed.setTextColor(Color.GREEN);
    			pressed.setEnabled(false);
-   			pressed.setBackgroundColor(Color.GRAY);
+   			pressed.setBackground(this.getResources().getDrawable(R.drawable.roundedgray));
    			result = filterOnChar(yes, input);
    			return result;
    		}
    		
    		pressed.setTextColor(Color.RED);
    		pressed.setEnabled(false);
-   		pressed.setBackgroundColor(Color.GRAY);
+   		pressed.setBackground(this.getResources().getDrawable(R.drawable.roundedgray));
    		if(nrOfFaults++ < 9)
    			updateHangman(nrOfFaults);
    		else 

@@ -1,10 +1,8 @@
 package com.example.twisted_hangman.sqlite.helper;
 
-import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,46 +22,33 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 	 // Logcat tag
     //private static final String LOG = "DatabaseHelper";
-		 
+	//The Android's default system path of your application database.
+    private static String DB_PATH = "/data/data/com.example.twisted_hangman/databases/";
+    private static String DB_NAME = "hangman";
+    private SQLiteDatabase myDataBase; 
+    private final Context myContext;
+    
     public DatabaseHelper(Context context, String name, CursorFactory factory,
 			int version) {
 		super(context, name, factory, version);
 		this.myContext = context;
-		// TODO Auto-generated constructor stub
 	}
-
-	//The Android's default system path of your application database.
-    private static String DB_PATH = "/data/data/hangman/databases/";
- 
-    private static String DB_NAME = "hangman.db";
- 
-    private SQLiteDatabase myDataBase; 
- 
-    private final Context myContext;
-	 
 	  /**
 	     * Creates a empty database on the system and rewrites it with your own database.
 	     * */
     public void createDataBase() throws IOException{
  
     	boolean dbExist = checkDataBase();
- 
+    	//copyDataBase();
     	if(dbExist){
-    		//do nothing - database already exist
     	}else{
  
     		//By calling this method and empty database will be created into the default system path
                //of your application so we are gonna be able to overwrite that database with our database.
-        	this.getReadableDatabase();
- 
         	try {
- 
     			copyDataBase();
- 
     		} catch (IOException e) {
- 
         		throw new Error("Error copying database");
- 
         	}
     	}
  
@@ -104,18 +89,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private void copyDataBase() throws IOException{
  
     	//Open your local db as the input stream
-    	InputStream myInput = myContext.getAssets().open(DB_NAME);
- 
+    	InputStream myInput = myContext.getAssets().open(DB_NAME + ".db");
+    	
     	// Path to the just created empty db
     	String outFileName = DB_PATH + DB_NAME;
- 
+    	
     	//Open the empty db as the output stream
     	OutputStream myOutput = new FileOutputStream(outFileName);
- 
+    	
     	//transfer bytes from the inputfile to the outputfile
     	byte[] buffer = new byte[1024];
     	int length;
     	while ((length = myInput.read(buffer))>0){
+    		
     		myOutput.write(buffer, 0, length);
     	}
  
@@ -123,8 +109,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     	myOutput.flush();
     	myOutput.close();
     	myInput.close();
- 
-    }
+ }
 	 
     public void openDataBase() throws SQLException{
  
@@ -157,10 +142,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	        // Add your public helper methods to access and get content from the database.
 	       // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
 	       // to you to create adapters for your views.
-	public List<Words_nl> getAllWords() { 
-        List<Words_nl> wordList = new ArrayList<Words_nl>();
+	public ArrayList<String> getAllWords() { 
+        ArrayList<String> wordList = new ArrayList<String>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM ";
+        String selectQuery = "SELECT  * FROM WORDS_5";
  
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -170,9 +155,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Words_nl word = new Words_nl();
                 word.setID(Integer.parseInt(cursor.getString(0)));
                 word.setValue(cursor.getString(1));
-                word.setLetterCount(Integer.parseInt(cursor.getString(2)));
                 // Adding contact to list
-                wordList.add(word);
+                wordList.add(word.getValue());
             } while (cursor.moveToNext());
         }
         
