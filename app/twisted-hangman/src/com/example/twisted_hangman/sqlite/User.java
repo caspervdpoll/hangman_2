@@ -8,6 +8,7 @@ public enum Language{nederlands, engels}
     int _difficulty;
     String _language;
     int _word_length;
+    String _game_type;
 
      
     // Empty constructor
@@ -15,20 +16,22 @@ public enum Language{nederlands, engels}
          
     }
     // constructor
-    public User(int id, String name, int difficulty, String language, int word_length){
+    public User(int id, String name, int difficulty, String language, int word_length, String game_type){
         this._id = id;
         this._name = name;
         this._difficulty = difficulty;
         this._language = language;
         this._word_length = word_length;
+        this._game_type = game_type;
     }
      
     // constructor
-    public User(String name, int difficulty, String language, int word_length){
+    public User(String name, int difficulty, String language, int word_length, String game_type){
     	 this._name = name;
          this._difficulty = difficulty;
          this._language = language;
          this._word_length = word_length;
+         this._game_type = game_type;
     }
     // getting ID
     public int getID(){
@@ -78,5 +81,15 @@ public enum Language{nederlands, engels}
     // setting difficulty
     public void setWordLength(int word_length){
         this._word_length = word_length;
+    }
+    
+    // getting difficulty
+    public String getGameType(){    	
+        return this._game_type;
+    }
+     
+    // setting difficulty
+    public void setGameType(String game_type){
+        this._game_type = game_type;
     }
 }
