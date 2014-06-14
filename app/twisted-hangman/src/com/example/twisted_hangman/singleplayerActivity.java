@@ -30,12 +30,7 @@ public class singleplayerActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_singleplayer);
 		
-		db = new DatabaseHelper(getApplicationContext());
-        try {
-			words = db.fillWords(getAssets().open("words.xml"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		db = new DatabaseHelper(getApplicationContext(), null, null, nrOfFaults);
         
         A = (Button) findViewById(R.id.A);
         B = (Button) findViewById(R.id.B);
