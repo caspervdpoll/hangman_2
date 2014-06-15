@@ -6,6 +6,7 @@ public class User {
     String _name;
     int _difficulty;
     int _word_length;
+    double _highscore;
 
     String _game_type;
 
@@ -15,20 +16,22 @@ public class User {
          
     }
     // constructor
-    public User(int id, String name, int difficulty, String game_type, int word_length){
+    public User(int id, String name, int difficulty, String game_type, int word_length, double highscore){
         this._id = id;
         this._name = name;
         this._difficulty = difficulty;
         this._game_type = game_type;
         this._word_length = word_length;
+        this._highscore = highscore;
     }
      
     // constructor
-    public User(String name, String game_type, int difficulty, int word_length){
+    public User(String name, String game_type, int difficulty, int word_length, double highscore){
     	 this._name = name;
          this._difficulty = difficulty;
          this._game_type = game_type;
          this._word_length = word_length;
+         this._highscore = highscore;
     }
     // getting ID
     public int getID(){
@@ -76,5 +79,13 @@ public class User {
     
     public void setWordLength(int word_length){
     	this._word_length = word_length;
+    }
+    
+    public double getHighsore(){
+    	return this._highscore;
+    }
+    
+    public void setHighscore(double highscore){
+    	this._highscore = highscore;
     }
 }

@@ -62,7 +62,7 @@ public class newuserActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View arg0) {
 				db.createUser(name.getText().toString(), Integer.parseInt(difficulty.getText().toString()), 
-						gametype, Integer.parseInt(amount_of_letters.getText().toString()));
+						gametype, Integer.parseInt(amount_of_letters.getText().toString()), 0.0);
 				user = db.getUserByName(name.getText().toString());
 				System.out.println(user.getName() + " " + user.getGameType());
 			    Intent intent = new Intent(context, singleplayerActivity.class);

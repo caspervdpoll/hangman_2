@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
-
 import com.example.twisted_hangman.sqlite.User;
 import com.example.twisted_hangman.sqlite.Words_nl;
 
@@ -37,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void createDataBase() throws IOException{
  
     	boolean dbExist = checkDataBase();
-    	copyDataBase(); //Uncomment this when the database already exists, but isn't filled
+    	//copyDataBase(); //Uncomment this when the database already exists, but isn't filled
     	//System.out.println(dbExist);
     	if(dbExist){
     		//Database exists
@@ -158,6 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 user.setName(cursor.getString(2));
                 user.setDifficulty(Integer.parseInt(cursor.getString(3)));
                 user.setGameType(cursor.getString(4));
+                user.setHighscore(cursor.getDouble(5));
                 userList.add(user);
             } while (cursor.moveToNext());
         }
@@ -181,7 +180,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    return 1;
 	}
 	
-	public long createUser(String name, int difficulty, String type, int amount_of_letters){
+	public long createUser(String name, int difficulty, String type, int amount_of_letters, double highscore){
 		SQLiteDatabase db = this.getWritableDatabase();		 
 	    ContentValues values = new ContentValues();
 	    
@@ -189,6 +188,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    values.put("difficulty", difficulty);
 	    values.put("type", type);
 	    values.put("word_length", amount_of_letters);
+	    values.put("highscore", highscore);
 	 
 	    
 	    System.out.println(values);
@@ -232,7 +232,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                  user.setID(temp);
                  user.setName(c.getString(2));
                  user.setDifficulty(Integer.parseInt(c.getString(3)));
-                 user.setGameType(c.getString(4));              
+                 user.setGameType(c.getString(4));        
+                 user.setHighscore(c.getDouble(5));
             } while (c.moveToNext());
         }
 	    System.out.println(temp);
@@ -253,6 +254,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                  user.setDifficulty(c.getInt(2));
                  user.setGameType(c.getString(3)); 
                  user.setWordLength(c.getInt(4));
+                 user.setHighscore(c.getDouble(5));
             } while (c.moveToNext());
         }
 	    

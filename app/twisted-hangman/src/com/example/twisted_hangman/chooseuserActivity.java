@@ -1,5 +1,6 @@
 package com.example.twisted_hangman;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -40,6 +41,12 @@ public class chooseuserActivity extends ListActivity {
 	
 		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
 		
+		try {
+			db.createDataBase();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		users = db.getAllUsers();
 		for(User user: users) {
 			usernames.add(user.getName());
@@ -54,13 +61,16 @@ public class chooseuserActivity extends ListActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 			    // When clicked, show a toast with the TextView text
-				System.out.println(view);
-				User temp = users.get((int)id);	
+				User user = users.get((int)id);	
 
-				Intent intent = new Intent(context, singleplayerActivity.class);
+				Intent intent = new Intent(context, MainActivity.class);
+				System.out.println("yolo");
+				System.out.println(user.getName());
+				System.out.println(user.getGameType());
+				System.out.println(user.getWordLength());
 				
 				Bundle b = new Bundle();
-			    b.putInt("id",temp.getID());
+			    b.putInt("id",user.getID());
 			    
 			    intent.putExtras(b);
                 startActivity(intent);

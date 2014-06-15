@@ -24,6 +24,7 @@ public class MainActivity extends ActionBarActivity {
 	Button statistics;
 	Button howToPlay;
 	DatabaseHelper db;
+	Bundle b;
 	
 	
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +32,8 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
 		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
-		try {
-			db.createDataBase();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        
+		b = getIntent().getExtras();
+		        
         addListenerOnButtonSingleplayer();
         addListenerOnButtonOptions();
         addListenerOnButtonStatistics();
@@ -57,7 +54,8 @@ public class MainActivity extends ActionBarActivity {
  
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(context, chooseuserActivity.class);
+				Intent intent = new Intent(context, singleplayerActivity.class);
+				intent.putExtras(b);
                 startActivity(intent);
 			}
 		});
