@@ -97,7 +97,7 @@ public class newuserActivity extends ActionBarActivity {
 						gametype, Integer.parseInt(amount_of_letters.getText().toString()), 0.0);
 				user = db.getUserByName(name.getText().toString());
 				System.out.println(user.getName() + " " + user.getGameType());
-			    Intent intent = new Intent(context, singleplayerActivity.class);
+			    Intent intent = new Intent(context, MainActivity.class);
 			    Bundle b = new Bundle();
 			    b.putInt("id", user.getID());
 			    intent.putExtras(b);
