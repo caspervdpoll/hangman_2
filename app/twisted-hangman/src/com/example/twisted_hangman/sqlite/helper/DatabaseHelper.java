@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void createDataBase() throws IOException{
  
     	boolean dbExist = checkDataBase();
-    	//copyDataBase(); //Uncomment this when the database already exists, but isn't filled
+    	copyDataBase(); //Uncomment this when the database already exists, but isn't filled
     	//System.out.println(dbExist);
     	if(dbExist){
     		//Database exists
@@ -123,10 +123,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 	 
-	public ArrayList<String> getAllWords() { 
+	public ArrayList<String> getAllWords(int word_length) { 
         ArrayList<String> wordList = new ArrayList<String>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM WORDS_5";
+        String selectQuery = "SELECT  * FROM WORDS_" + word_length;
  
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -146,22 +146,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public ArrayList<User> getAllUsers() { 
         ArrayList<User> userList = new ArrayList<User>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM users";
- 
+        String selectQuery = "SELECT rowid, * FROM users";
+
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.getCount() >0 && cursor.moveToFirst()) {
             do {
                 User user = new User();
                 user.setID(Integer.parseInt(cursor.getString(0)));
-                user.setName(cursor.getString(1));
-                user.setDifficulty(Integer.parseInt(cursor.getString(2)));
-                user.setGameType(cursor.getString(3));
+                user.setName(cursor.getString(2));
+                user.setDifficulty(Integer.parseInt(cursor.getString(3)));
+                user.setGameType(cursor.getString(4));
                 userList.add(user);
             } while (cursor.moveToNext());
         }
-        
+        cursor.close();
+        System.out.println("na de query" + userList);
         return userList;
 	}
 	
@@ -180,14 +181,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    return 1;
 	}
 	
-	public long createUser(String name, int difficulty, String type, int word_length){
+	public long createUser(String name, int difficulty, String type, int amount_of_letters){
 		SQLiteDatabase db = this.getWritableDatabase();		 
 	    ContentValues values = new ContentValues();
 	    
 	    values.put("name", name);
 	    values.put("difficulty", difficulty);
 	    values.put("type", type);
+	    values.put("word_length", amount_of_letters);
 	 
+	    
+	    System.out.println(values);
 	    // insert row
 	    long tag_id = db.insert("users", null, values);
 	   // System.out.println(tag_id);
@@ -215,10 +219,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	public User getUserByName(String name){
-		
+		int temp = 0;
 		String Query = "SELECT rowid, * FROM users WHERE name = '" + name + "'";
 		User user = new User();
-		int temp = 0;
 		SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor c = db.rawQuery(Query, null);
 
@@ -234,5 +237,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 	    System.out.println(temp);
 		return user;
-	}	
+	}
+	
+	public User getUserById(int id){
+		int temp = 0;
+		String Query = "SELECT * FROM users WHERE rowid = '" + id + "'";
+		User user = new User();
+		SQLiteDatabase db = this.getReadableDatabase();
+	    Cursor c = db.rawQuery(Query, null);
+
+	    if (c != null && c.getCount() >0 && c.moveToFirst()) {
+            do {
+                 user.setID(temp);
+                 user.setName(c.getString(1));
+                 user.setDifficulty(c.getInt(2));
+                 user.setGameType(c.getString(3)); 
+                 user.setWordLength(c.getInt(4));
+            } while (c.moveToNext());
+        }
+	    
+	    c.close();
+
+		return user;
+		
+	}
 }

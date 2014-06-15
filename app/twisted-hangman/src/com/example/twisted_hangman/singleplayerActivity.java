@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
+import com.example.twisted_hangman.sqlite.User;
 import com.example.twisted_hangman.sqlite.Words_nl;
 
 import android.database.Cursor;
@@ -27,6 +28,8 @@ public class singleplayerActivity extends ActionBarActivity {
 	TextView word;
 	ImageView hangman;
 	int nrOfFaults;
+	Bundle b;
+	User user;
 	
     
    	@Override
@@ -35,9 +38,11 @@ public class singleplayerActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_singleplayer);
 		
 		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
+		b = getIntent().getExtras();
+
+		user = db.getUserById(b.getInt("id"));
 		
-		System.out.println("be4 getallwords");
-		words = db.getAllWords();
+		words = db.getAllWords(user.getWordLength());
 		System.out.println("after getallwords");        
         A = (Button) findViewById(R.id.A);
         B = (Button) findViewById(R.id.B);

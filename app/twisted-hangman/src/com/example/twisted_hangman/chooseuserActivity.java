@@ -25,35 +25,25 @@ public class chooseuserActivity extends ListActivity {
 	// URL VOOR INFO  http://www.mkyong.com/android/android-listview-example/
 	// ALLE CODE STAAT BIJ HET EERSTE VOORBEELD, IK KAN ALLEEN DE setListAdapter NIET GOED KRIJGEN
 	
-	
+	User user;
 	DatabaseHelper db;
 	ArrayList<User> users;
 	Button newuser;
 	
-	
-	//static final String usernames[] = {};
 	ArrayList<String> usernames = new ArrayList<String>();
-	/*static final String[] FRUITS = new String[] { "Apple", "Avocado", "Banana",
-		"Blueberry", "Coconut", "Durian", "Guava", "Kiwifruit",
-		"Jackfruit", "Mango", "Olive", "Pear", "Sugar-apple" };*/
  
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
+		super.onCreate(savedInstanceState);	
+		final Context context = this;
 	
-		/*db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
+		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
 		
 		users = db.getAllUsers();
-		int counter = 0;
 		for(User user: users) {
-			usernames[counter] = user.getName();
-			System.out.println(usernames[counter]);
-			counter++;
-		}*/
-		usernames.add("casper");
-		usernames.add("justin");
-		
+			usernames.add(user.getName());
+		}
+
 		setListAdapter(new ArrayAdapter<String>(this, R.layout.list_user, R.id.list_item, usernames));
  
 		ListView listView = getListView();
@@ -63,8 +53,26 @@ public class chooseuserActivity extends ListActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 			    // When clicked, show a toast with the TextView text
-			    Toast.makeText(getApplicationContext(),
-				((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+				System.out.println(id);
+				user = db.getUserById((int)id);
+				Intent intent = new Intent(context, singleplayerActivity.class);
+				System.out.println("yolo");
+				System.out.println(user.getName());
+				System.out.println(user.getGameType());
+				System.out.println(user.getWordLength());
+				
+				Bundle b = new Bundle();
+			    b.putString("name", user.getName());
+			    b.putInt("amount_of_letters", user.getWordLength());
+			    b.putString("type", user.getGameType());
+			    b.putInt("id",(int)id);
+			    
+				System.out.println(b.get("name"));
+				System.out.println(b.get("id"));
+				System.out.println(b.get("amount_of_letters"));
+			    
+			    intent.putExtras(b);
+                startActivity(intent);
 			}
 		});
 		

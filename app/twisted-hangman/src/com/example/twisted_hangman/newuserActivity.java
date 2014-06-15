@@ -19,7 +19,7 @@ import android.widget.Switch;
 public class newuserActivity extends ActionBarActivity {
 	
 	Button go;
-	EditText name, difficulty;
+	EditText name, difficulty, amount_of_letters;
 	DatabaseHelper db;
 	Switch type;
 	String gametype;
@@ -55,15 +55,20 @@ public class newuserActivity extends ActionBarActivity {
 		name = (EditText)findViewById(R.id.editName);
 		difficulty = (EditText)findViewById(R.id.editDifficulty);
 		type = (Switch)findViewById(R.id.type);
+		amount_of_letters = (EditText)findViewById(R.id.amountOfLetters);
 
 		go.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
-				db.createUser(name.getText().toString(), Integer.parseInt(difficulty.getText().toString()), gametype, 0);
+				db.createUser(name.getText().toString(), Integer.parseInt(difficulty.getText().toString()), 
+						gametype, Integer.parseInt(amount_of_letters.getText().toString()));
 				user = db.getUserByName(name.getText().toString());
 				System.out.println(user.getName() + " " + user.getGameType());
 			    Intent intent = new Intent(context, singleplayerActivity.class);
+			    Bundle b = new Bundle();
+			    b.putInt("id", user.getID());
+			    intent.putExtras(b);
                 startActivity(intent);   
  
 			}

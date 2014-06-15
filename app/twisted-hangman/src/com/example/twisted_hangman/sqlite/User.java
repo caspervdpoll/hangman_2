@@ -5,6 +5,7 @@ public class User {
 	int _id;
     String _name;
     int _difficulty;
+    int _word_length;
 
     String _game_type;
 
@@ -14,18 +15,20 @@ public class User {
          
     }
     // constructor
-    public User(int id, String name, int difficulty, String game_type){
+    public User(int id, String name, int difficulty, String game_type, int word_length){
         this._id = id;
         this._name = name;
         this._difficulty = difficulty;
         this._game_type = game_type;
+        this._word_length = word_length;
     }
      
     // constructor
-    public User(String name, String game_type, int difficulty){
+    public User(String name, String game_type, int difficulty, int word_length){
     	 this._name = name;
          this._difficulty = difficulty;
          this._game_type = game_type;
+         this._word_length = word_length;
     }
     // getting ID
     public int getID(){
@@ -65,5 +68,13 @@ public class User {
     // setting difficulty
     public void setGameType(String game_type){
         this._game_type = game_type;
+    }
+    
+    public int getWordLength(){
+    	return this._word_length;
+    }
+    
+    public void setWordLength(int word_length){
+    	this._word_length = word_length;
     }
 }
