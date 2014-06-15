@@ -20,31 +20,33 @@ public class newuserActivity extends ActionBarActivity {
 	
 	Button go;
 	EditText name, difficulty;
-	Switch lang;
 	DatabaseHelper db;
-	String language;
+	Switch type;
+	String gametype;
 	User user;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_newuser);
 		addListenerOnButtonGo();
-		language = "nederlands";
-		lang =  (Switch) findViewById(R.id.editLanguage);
-		if (lang != null) {
-			lang.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		
+		gametype = "evil";
+		type = (Switch) findViewById(R.id.type);
+		
+		if (type != null) {
+			type.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					language = "nederlands";
+					gametype = "evil";
 					if(isChecked){
-						language = "engels";
+						gametype = "normal";
 					}
-					System.out.println(language);
 				}
 			});
 		}
 			
-		db = new DatabaseHelper(getApplicationContext(), language, null, 1);
+		db = new DatabaseHelper(getApplicationContext(), "engels", null, 1);
 	}
 	
 	public void addListenerOnButtonGo() {
@@ -52,11 +54,13 @@ public class newuserActivity extends ActionBarActivity {
 		go = (Button) findViewById(R.id.go);
 		name = (EditText)findViewById(R.id.editName);
 		difficulty = (EditText)findViewById(R.id.editDifficulty);
+		type = (Switch)findViewById(R.id.type);
+
 		go.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
-				db.createUser(name.getText().toString(), Integer.parseInt(difficulty.getText().toString()), language, 0);
+				db.createUser(name.getText().toString(), Integer.parseInt(difficulty.getText().toString()), gametype, 0);
 				user = db.getUserByName(name.getText().toString());
 				System.out.println(user.getName() + " " + user.getLanguage());
 			    Intent intent = new Intent(context, singleplayerActivity.class);

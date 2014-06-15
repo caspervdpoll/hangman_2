@@ -83,31 +83,7 @@
         </EditText>
     </LinearLayout>
     
-    <LinearLayout
-        android:id="@+id/language"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/difficulty"
-        android:layout_marginTop="15dp" >
 
-        <TextView
-            android:id="@+id/language_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="Language "
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/grey" />
-
-        <Switch
-            android:id="@+id/editLanguage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOn="EN"
-            android:textOff="NL" />
-        
-    </LinearLayout>
 
     <Button
         android:id="@+id/go"
@@ -123,5 +99,25 @@
         android:text="Let&apos;s go!"
         android:textColor="@color/white"
         android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/go"
+        android:layout_below="@+id/difficulty"
+        android:layout_marginTop="23dp"
+        android:text="type "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/grey" />
+
+    <Switch
+        android:id="@+id/type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/TextView02"
+        android:layout_centerHorizontal="true"
+        android:textOff="Normal"
+        android:textOn="Evil" />
 
 </RelativeLayout>

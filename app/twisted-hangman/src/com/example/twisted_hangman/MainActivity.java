@@ -1,5 +1,7 @@
 package com.example.twisted_hangman;
 
+import java.io.IOException;
+
 import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
 
 import android.support.v7.app.ActionBarActivity;
@@ -28,6 +30,13 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
+		try {
+			db.createDataBase();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
         addListenerOnButtonSingleplayer();
         addListenerOnButtonOptions();
         addListenerOnButtonStatistics();

@@ -38,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
  
     	boolean dbExist = checkDataBase();
     	//copyDataBase(); //Uncomment this when the database already exists, but isn't filled
+    	System.out.println(dbExist);
     	if(dbExist){
     		//Database exists
     	} else {
@@ -180,23 +181,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    return 1;
 	}
 	
-	public long createUser(String name, int difficulty, String language, int word_length){
+	public long createUser(String name, int difficulty, String type, int word_length){
 		SQLiteDatabase db = this.getWritableDatabase();		 
 	    ContentValues values = new ContentValues();
 	    
 	    values.put("name", name);
 	    values.put("difficulty", difficulty);
-	    values.put("language", language);
-	    if(word_length != 0){
-	    	values.put("word_length", word_length);
-	    } else {
-	    	values.put("word_length", 6);
-	    }
+	    values.put("language", type);
 	 
 	    // insert row
-	    //long tag_id = db.insert(TABLE_USER, null, values);
+	    long tag_id = db.insert("users", null, values);
 	   // System.out.println(tag_id);
-	    return 1;
+	    return tag_id;
 	}
 	
 	/*
