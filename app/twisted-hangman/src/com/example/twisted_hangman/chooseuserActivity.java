@@ -7,7 +7,9 @@ import com.example.twisted_hangman.sqlite.User;
 import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,13 +27,18 @@ public class chooseuserActivity extends ListActivity {
 	ArrayList<User> users;
 	
 	
-	static final String usernames[] = {};
+	//static final String usernames[] = {};
+	ArrayList<String> usernames = new ArrayList<String>();
+	/*static final String[] FRUITS = new String[] { "Apple", "Avocado", "Banana",
+		"Blueberry", "Coconut", "Durian", "Guava", "Kiwifruit",
+		"Jackfruit", "Mango", "Olive", "Pear", "Sugar-apple" };*/
  
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
+	
+		/*db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
 		
 		users = db.getAllUsers();
 		int counter = 0;
@@ -39,10 +46,11 @@ public class chooseuserActivity extends ListActivity {
 			usernames[counter] = user.getName();
 			System.out.println(usernames[counter]);
 			counter++;
-		}
+		}*/
+		usernames.add("casper");
+		usernames.add("justin");
 		
-		
-		setListAdapter(new ArrayAdapter<String>(this, R.id.container, usernames));
+		setListAdapter(new ArrayAdapter<String>(this, R.layout.list_user, R.id.list_item, usernames));
  
 		ListView listView = getListView();
 		listView.setTextFilterEnabled(true);
@@ -55,6 +63,9 @@ public class chooseuserActivity extends ListActivity {
 				((TextView) view).getText(), Toast.LENGTH_SHORT).show();
 			}
 		});
+		
+		View footerView =  ((LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_layout, null, false);
+        listView.addFooterView(footerView);
  
 	}
  
