@@ -46,7 +46,7 @@ public class newuserActivity extends ActionBarActivity {
 			});
 		}
 			
-		db = new DatabaseHelper(getApplicationContext(), "engels", null, 1);
+		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
 	}
 	
 	public void addListenerOnButtonGo() {
@@ -62,7 +62,7 @@ public class newuserActivity extends ActionBarActivity {
 			public void onClick(View arg0) {
 				db.createUser(name.getText().toString(), Integer.parseInt(difficulty.getText().toString()), gametype, 0);
 				user = db.getUserByName(name.getText().toString());
-				System.out.println(user.getName() + " " + user.getLanguage());
+				System.out.println(user.getName() + " " + user.getGameType());
 			    Intent intent = new Intent(context, singleplayerActivity.class);
                 startActivity(intent);   
  

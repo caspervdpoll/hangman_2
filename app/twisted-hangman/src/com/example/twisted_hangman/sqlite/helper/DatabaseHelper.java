@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
  
     	boolean dbExist = checkDataBase();
     	//copyDataBase(); //Uncomment this when the database already exists, but isn't filled
-    	System.out.println(dbExist);
+    	//System.out.println(dbExist);
     	if(dbExist){
     		//Database exists
     	} else {
@@ -157,8 +157,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 user.setID(Integer.parseInt(cursor.getString(0)));
                 user.setName(cursor.getString(1));
                 user.setDifficulty(Integer.parseInt(cursor.getString(2)));
-                user.setLanguage(cursor.getString(3));
-                user.setWordLength(Integer.parseInt(cursor.getString(4)));
+                user.setGameType(cursor.getString(3));
                 userList.add(user);
             } while (cursor.moveToNext());
         }
@@ -187,7 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    
 	    values.put("name", name);
 	    values.put("difficulty", difficulty);
-	    values.put("language", type);
+	    values.put("type", type);
 	 
 	    // insert row
 	    long tag_id = db.insert("users", null, values);
@@ -217,20 +216,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	
 	public User getUserByName(String name){
 		
-		String Query = "SELECT * FROM " + " WHERE name = '" + name + "'";
+		String Query = "SELECT rowid, * FROM users WHERE name = '" + name + "'";
 		User user = new User();
 		int temp = 0;
 		SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor c = db.rawQuery(Query, null);
 
 	    if (c.moveToFirst()) {
-            do {            	 
+            do {
+            	 System.out.println(c.getString(0));
             	 temp = Integer.parseInt(c.getString(0));
                  user.setID(temp);
-                 user.setName(c.getString(1));
-                 user.setDifficulty(Integer.parseInt(c.getString(2)));
-                 user.setLanguage(c.getString(3));
-                 user.setWordLength(Integer.parseInt(c.getString(4)));              
+                 user.setName(c.getString(2));
+                 user.setDifficulty(Integer.parseInt(c.getString(3)));
+                 user.setGameType(c.getString(4));              
             } while (c.moveToNext());
         }
 	    System.out.println(temp);

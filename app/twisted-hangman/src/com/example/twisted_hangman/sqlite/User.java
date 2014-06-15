@@ -1,7 +1,6 @@
 package com.example.twisted_hangman.sqlite;
 
 public class User {
-public enum Language{nederlands, engels}
 	
 	int _id;
     String _name;
