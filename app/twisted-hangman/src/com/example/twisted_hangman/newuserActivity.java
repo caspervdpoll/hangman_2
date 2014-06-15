@@ -44,7 +44,7 @@ public class newuserActivity extends ActionBarActivity {
 			});
 		}
 			
-		db = new DatabaseHelper(getApplicationContext(), language, null, 0);
+		db = new DatabaseHelper(getApplicationContext(), language, null, 1);
 	}
 	
 	public void addListenerOnButtonGo() {

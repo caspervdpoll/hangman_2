@@ -8,11 +8,14 @@ import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +28,7 @@ public class chooseuserActivity extends ListActivity {
 	
 	DatabaseHelper db;
 	ArrayList<User> users;
+	Button newuser;
 	
 	
 	//static final String usernames[] = {};
@@ -66,7 +70,21 @@ public class chooseuserActivity extends ListActivity {
 		
 		View footerView =  ((LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_layout, null, false);
         listView.addFooterView(footerView);
+        addListenerOnButtonNewUser();
+    	}
  
+	public void addListenerOnButtonNewUser() {
+		final Context context = this;
+		newuser = (Button) findViewById(R.id.new_user);
+		newuser.setOnClickListener(new OnClickListener() {
+ 
+			@Override
+			public void onClick(View arg0) {
+			    Intent intent = new Intent(context, newuserActivity.class);
+                            startActivity(intent);   
+ 
+			}
+		});
+		
 	}
- 
 }
