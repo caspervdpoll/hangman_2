@@ -6,8 +6,7 @@ public enum Language{nederlands, engels}
 	int _id;
     String _name;
     int _difficulty;
-    String _language;
-    int _word_length;
+
     String _game_type;
 
      
@@ -16,21 +15,17 @@ public enum Language{nederlands, engels}
          
     }
     // constructor
-    public User(int id, String name, int difficulty, String language, int word_length, String game_type){
+    public User(int id, String name, int difficulty, String game_type){
         this._id = id;
         this._name = name;
         this._difficulty = difficulty;
-        this._language = language;
-        this._word_length = word_length;
         this._game_type = game_type;
     }
      
     // constructor
-    public User(String name, int difficulty, String language, int word_length, String game_type){
+    public User(String name, String game_type, int difficulty){
     	 this._name = name;
          this._difficulty = difficulty;
-         this._language = language;
-         this._word_length = word_length;
          this._game_type = game_type;
     }
     // getting ID
@@ -52,8 +47,8 @@ public enum Language{nederlands, engels}
     public void setName(String name){
         this._name = name;
     }
-     
-    // getting difficulty
+  
+ // getting difficulty
     public int getDifficulty(){    	
         return this._difficulty;
     }
@@ -61,26 +56,6 @@ public enum Language{nederlands, engels}
     // setting difficulty
     public void setDifficulty(int difficulty){
         this._difficulty = difficulty;
-    }
-    
-    // getting difficulty
-    public String getLanguage(){    	
-        return this._language;
-    }
-     
-    // setting difficulty
-    public void setLanguage(String language){
-        this._language = language;
-    }
-    
-    // getting difficulty
-    public int getWordLength(){    	
-        return this._word_length;
-    }
-     
-    // setting difficulty
-    public void setWordLength(int word_length){
-        this._word_length = word_length;
     }
     
     // getting difficulty
