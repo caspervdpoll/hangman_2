@@ -68,16 +68,53 @@
             android:textColor="@color/grey"
             android:layout_weight="2"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-        
-        <SeekBar android:id="@+id/editDifficulty"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:max="100"
-			android:minWidth="250px"  />
+         
+          <SeekBar
+	        android:id="@+id/editDifficulty"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/TextView02"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/letter_amount"
+	        android:layout_marginTop="14dp"
+	        android:layout_weight="4.56"
+	        android:max="100"
+	        android:minWidth="250px" />
 
     </LinearLayout>
     
+	 <LinearLayout
+        android:id="@+id/letter_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/name"
+        android:layout_marginTop="15dp" >
 
+	    <TextView
+	        android:id="@+id/letter_amount_input"
+	        android:layout_width="92dp"
+	        android:layout_height="45dp"
+	        android:layout_alignLeft="@+id/TextView02"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/type"
+	        android:layout_marginTop="30dp"
+	        android:text="Amount of Letters"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textColor="@color/grey" />
+	
+	    <SeekBar
+	        android:id="@+id/editLetterAmount"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/letter_amount_input"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@+id/letter_amount_input"
+	        android:layout_weight="1"
+	        android:max="24"
+	        android:minWidth="250px" /> 
+	     
+    </LinearLayout>
 
     <Button
         android:id="@+id/go"
@@ -94,48 +131,29 @@
         android:textColor="@color/white"
         android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/TextView02"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/go"
-        android:layout_below="@+id/difficulty"
-        android:layout_marginTop="23dp"
-        android:text="type "
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/grey" />
-
-    <TextView
-        android:id="@+id/letter_amount_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextView02"
-        android:layout_below="@+id/type"
-        android:layout_marginTop="33dp"
-        android:text="Amount of Letters"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/grey" />
+    
 
     <Switch
         android:id="@+id/type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/amountOfLetters"
-        android:layout_alignTop="@+id/TextView02"
+        android:layout_alignRight="@+id/go"
+        android:layout_below="@+id/editDifficulty"
+        android:layout_marginTop="16dp"
         android:textOff="Normal"
         android:textOn="Evil" />
 
-    <EditText
-        android:id="@+id/amountOfLetters"
+    <TextView
+        android:id="@+id/TextView02"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignBaseline="@+id/letter_amount_input"
-        android:layout_alignBottom="@+id/letter_amount_input"
-        android:layout_alignRight="@+id/go"
-        android:layout_weight="1"
-        android:background="@drawable/backwithborder"
-        android:ems="10"
-        android:textColor="@color/white"
-        android:width="100dp" />
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/letter_amount_input"
+        android:layout_alignLeft="@+id/go"
+        android:layout_alignTop="@+id/type"
+        android:text="type "
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/grey" />
+
+   
 
 </RelativeLayout>

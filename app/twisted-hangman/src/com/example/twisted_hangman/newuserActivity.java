@@ -27,8 +27,8 @@ public class newuserActivity extends ActionBarActivity {
 	Switch type;
 	String gametype;
 	User user;
-	SeekBar seekbar;
-	TextView value;
+	SeekBar seekbar, seekbar1;
+	TextView value, value1;
 	int diff;
 	
 	@Override
@@ -54,7 +54,8 @@ public class newuserActivity extends ActionBarActivity {
 		value = (TextView) findViewById(R.id.TextView01);
 		seekbar = (SeekBar) findViewById(R.id.editDifficulty);
 		        
-		seekbar.setOnSeekBarChangeListener( new OnSeekBarChangeListener(){
+		value1 = (TextView) findViewById(R.id.letter_amount_input);
+		seekbar1 = (SeekBar) findViewById(R.id.editLetterAmount);
 		
 			public void onProgressChanged(SeekBar seekBar, int progress,
                     boolean fromUser)
