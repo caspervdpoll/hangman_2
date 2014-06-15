@@ -10,6 +10,7 @@ import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
 import com.example.twisted_hangman.sqlite.User;
 import com.example.twisted_hangman.sqlite.Words_nl;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -100,6 +101,7 @@ public class singleplayerActivity extends ActionBarActivity {
         
         word.setText(wordToPrint);
         nrOfFaults = 0;
+        updateHangman(0);
 	}
    	
    	public void onClick(View v) {
@@ -113,10 +115,21 @@ public class singleplayerActivity extends ActionBarActivity {
    	}
    	
    	private void youWon() {
-   		onBackPressed();
+   		Intent intent = new Intent(this, wonActivity.class);
+   		intent.putExtras(b);
+        startActivity(intent);
+   	}
+   	
+   	private void youLost() {
+   		System.out.println("i lost");
+   		Intent intent = new Intent(this, lostActivity.class);
+   		intent.putExtras(b);
+        startActivity(intent);
    	}
    	
    	public void updateHangman(int step) {
+   		int difficulty = user.getDifficulty();
+   		step = step + difficulty;
    		String filename = "step" + step;
    		if(step != 11) {
    			int resID = getResources().getIdentifier(filename, "drawable", getPackageName());
@@ -163,8 +176,10 @@ public class singleplayerActivity extends ActionBarActivity {
    			
    			if(nrOfFaults++ < 9)
    	   			updateHangman(nrOfFaults);
-   	   		else 
-   	   			onBackPressed();
+   	   		else {
+   	   			System.out.println("about to loose");
+   	   			youLost();
+   	   		}
    		}
    			
    		
