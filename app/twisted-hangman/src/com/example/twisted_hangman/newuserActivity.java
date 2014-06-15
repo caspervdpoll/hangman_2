@@ -29,7 +29,7 @@ public class newuserActivity extends ActionBarActivity {
 	User user;
 	SeekBar seekbar, seekbar1;
 	TextView value, value1;
-	int diff;
+	int diff, count;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,8 @@ public class newuserActivity extends ActionBarActivity {
 		        
 		value1 = (TextView) findViewById(R.id.letter_amount_input);
 		seekbar1 = (SeekBar) findViewById(R.id.editLetterAmount);
-		
+		seekbar.setOnSeekBarChangeListener( new OnSeekBarChangeListener()
+		{
 			public void onProgressChanged(SeekBar seekBar, int progress,
                     boolean fromUser)
 			{
@@ -64,6 +65,29 @@ public class newuserActivity extends ActionBarActivity {
 				
 					diff = (int)progress/10;
                     value.setText("Difficulty: " + diff);
+			}
+
+			public void onStartTrackingTouch(SeekBar seekBar)
+			{
+                    // TODO Auto-generated method stub
+			}
+
+			public void onStopTrackingTouch(SeekBar seekBar)
+			{
+                    // TODO Auto-generated method stub
+			}
+
+		});
+		
+		seekbar1.setOnSeekBarChangeListener( new OnSeekBarChangeListener()
+		{
+			public void onProgressChanged(SeekBar seekBar, int progress,
+                    boolean fromUser)
+			{
+                    // TODO Auto-generated method stub
+				
+					count = (int)progress;
+                    value.setText("Letter count: " + count);
 			}
 
 			public void onStartTrackingTouch(SeekBar seekBar)
@@ -94,7 +118,7 @@ public class newuserActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View arg0) {
 				db.createUser(name.getText().toString(), diff, 
-						gametype, Integer.parseInt(amount_of_letters.getText().toString()), 0.0);
+						gametype, count, 0.0);
 				user = db.getUserByName(name.getText().toString());
 				System.out.println(user.getName() + " " + user.getGameType());
 			    Intent intent = new Intent(context, MainActivity.class);
