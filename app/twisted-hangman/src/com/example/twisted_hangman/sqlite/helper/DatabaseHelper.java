@@ -35,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void createDataBase() throws IOException{
  
     	boolean dbExist = checkDataBase();
-    	//copyDataBase(); //Uncomment this when the database already exists, but isn't filled
+    	copyDataBase(); //Uncomment this when the database already exists, but isn't filled
     	//System.out.println(dbExist);
     	if(dbExist){
     		//Database exists

@@ -51,7 +51,7 @@
 	    
     </LinearLayout>
 
-    <LinearLayout
+   <LinearLayout
         android:id="@+id/difficulty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,28 +59,22 @@
         android:layout_below="@+id/name"
         android:layout_marginTop="15dp" >
 
-        <TextView
+         <TextView
             android:id="@+id/TextView01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:text="Difficulty "
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/grey" />
+            android:text="Difficulty"
+            android:textColor="@color/grey"
+            android:layout_weight="2"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
         
-        <EditText
-            android:id="@+id/editDifficulty"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="30dp"
-            android:ems="10"
-            android:textColor="@color/white"
-            android:background="@drawable/backwithborder"  >
+        <SeekBar android:id="@+id/editDifficulty"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:max="100"
+			android:minWidth="250px"  />
 
-            <requestFocus />
-        </EditText>
     </LinearLayout>
     
 

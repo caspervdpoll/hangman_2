@@ -13,7 +13,10 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Switch;
+import android.widget.TextView;
 
 
 public class newuserActivity extends ActionBarActivity {
@@ -24,7 +27,9 @@ public class newuserActivity extends ActionBarActivity {
 	Switch type;
 	String gametype;
 	User user;
-	
+	SeekBar seekbar;
+	TextView value;
+	int diff;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +50,33 @@ public class newuserActivity extends ActionBarActivity {
 				}
 			});
 		}
-			
+		
+		value = (TextView) findViewById(R.id.TextView01);
+		seekbar = (SeekBar) findViewById(R.id.editDifficulty);
+		        
+		seekbar.setOnSeekBarChangeListener( new OnSeekBarChangeListener(){
+		
+			public void onProgressChanged(SeekBar seekBar, int progress,
+                    boolean fromUser)
+			{
+                    // TODO Auto-generated method stub
+				
+					diff = (int)progress/10;
+                    value.setText("Difficulty: " + diff);
+			}
+
+			public void onStartTrackingTouch(SeekBar seekBar)
+			{
+                    // TODO Auto-generated method stub
+			}
+
+			public void onStopTrackingTouch(SeekBar seekBar)
+			{
+                    // TODO Auto-generated method stub
+			}
+
+		});
+		
 		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
 	}
 	
@@ -53,7 +84,7 @@ public class newuserActivity extends ActionBarActivity {
 		final Context context = this;
 		go = (Button) findViewById(R.id.go);
 		name = (EditText)findViewById(R.id.editName);
-		difficulty = (EditText)findViewById(R.id.editDifficulty);
+
 		type = (Switch)findViewById(R.id.type);
 		amount_of_letters = (EditText)findViewById(R.id.amountOfLetters);
 
@@ -61,7 +92,7 @@ public class newuserActivity extends ActionBarActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				db.createUser(name.getText().toString(), Integer.parseInt(difficulty.getText().toString()), 
+				db.createUser(name.getText().toString(), diff, 
 						gametype, Integer.parseInt(amount_of_letters.getText().toString()), 0.0);
 				user = db.getUserByName(name.getText().toString());
 				System.out.println(user.getName() + " " + user.getGameType());
