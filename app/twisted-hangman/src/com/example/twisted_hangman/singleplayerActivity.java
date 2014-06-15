@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
 import com.example.twisted_hangman.sqlite.User;
@@ -30,6 +31,8 @@ public class singleplayerActivity extends ActionBarActivity {
 	int nrOfFaults;
 	Bundle b;
 	User user;
+	String word_normal = "";
+	String game_type = "";
 	
     
    	@Override
@@ -39,11 +42,29 @@ public class singleplayerActivity extends ActionBarActivity {
 		
 		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
 		b = getIntent().getExtras();
-
-		user = db.getUserById(b.getInt("id"));
+		int letter_count = 5;
+		int words_size;
+		int word_id;
 		
-		words = db.getAllWords(user.getWordLength());
-		System.out.println("after getallwords");        
+		Random randomGenerator = new Random();
+		
+		user = db.getUserById(b.getInt("id"));
+
+		letter_count = user.getWordLength();
+		game_type = user.getGameType();
+		
+		words = db.getAllWords(letter_count);
+
+		if(game_type.equals("normal")){
+
+			//random number generator
+			words_size = words.size();
+			word_id = randomGenerator.nextInt(40000) % words_size;
+			
+			word_normal = words.get(word_id);
+		}
+		
+       
         A = (Button) findViewById(R.id.A);
         B = (Button) findViewById(R.id.B);
         C = (Button) findViewById(R.id.C);
@@ -73,12 +94,8 @@ public class singleplayerActivity extends ActionBarActivity {
         word = (TextView) findViewById(R.id.word); 
         hangman = (ImageView) findViewById(R.id.hangman);
         
-        words = filterWordsOnLength(words, 5);
-        //for(int i = 0; i < words.size(); i++)
-        	//System.out.println(words.get(i).toString());
-        
         String wordToPrint = ""; 
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < letter_count ; i++)
         	wordToPrint += "_ ";
         
         word.setText(wordToPrint);
@@ -86,35 +103,13 @@ public class singleplayerActivity extends ActionBarActivity {
 	}
    	
    	public void onClick(View v) {
-   		switch(v.getId()) {
-		    case R.id.A: words = filterWords(words, 'A', A);break;
-		    case R.id.B: words = filterWords(words, 'B', B);break;
-		    case R.id.C: words = filterWords(words, 'C', C);break;
-		    case R.id.D: words = filterWords(words, 'D', D);break;
-		    case R.id.E: words = filterWords(words, 'E', E);break;
-		    case R.id.F: words = filterWords(words, 'F', F);break;
-		    case R.id.G: words = filterWords(words, 'G', G);break;
-		    case R.id.H: words = filterWords(words, 'H', H);break;
-		    case R.id.I: words = filterWords(words, 'I', I);break;
-		    case R.id.J: words = filterWords(words, 'J', J);break;
-		    case R.id.K: words = filterWords(words, 'K', K);break;
-		    case R.id.L: words = filterWords(words, 'L', L);break;
-		    case R.id.M: words = filterWords(words, 'M', M);break;
-		    case R.id.N: words = filterWords(words, 'N', N);break;
-		    case R.id.O: words = filterWords(words, 'O', O);break;
-		    case R.id.P: words = filterWords(words, 'P', P);break;
-		    case R.id.Q: words = filterWords(words, 'Q', Q);break;
-		    case R.id.R: words = filterWords(words, 'R', R_button);break;
-		    case R.id.S: words = filterWords(words, 'S', S);break;
-		    case R.id.T: words = filterWords(words, 'T', T);break;
-		    case R.id.U: words = filterWords(words, 'U', U);break;
-		    case R.id.V: words = filterWords(words, 'V', V);break;
-		    case R.id.W: words = filterWords(words, 'W', W);break;
-		    case R.id.X: words = filterWords(words, 'X', X);break;
-		    case R.id.Y: words = filterWords(words, 'Y', Y);break;
-		    case R.id.Z: words = filterWords(words, 'Z', Z);break;
-   		}
-   		System.out.println("Words " + words);
+
+   		Button b = (Button)v;
+   		String buttonText = b.getText().toString();
+   		if(game_type.equals("evil"))
+   			filterWords(words, buttonText.charAt(0), b);
+   		else
+   			filterWord(word_normal, buttonText.charAt(0), b);
    	}
    	
    	private void youWon() {
@@ -127,6 +122,52 @@ public class singleplayerActivity extends ActionBarActivity {
    			int resID = getResources().getIdentifier(filename, "drawable", getPackageName());
    			hangman.setImageResource(resID);
    		}
+   	}
+   	
+   	public void filterWord(String word_temp, char input, Button button){
+   		System.out.println(word_temp);
+   		System.out.println(input);
+   		String key = "";
+   		if(word_temp.indexOf(input) >= 0){
+   			
+   			button.setTextColor(Color.GREEN);
+   			button.setEnabled(false);
+   			button.setBackground(this.getResources().getDrawable(R.drawable.roundedgray));
+  			
+			for(int j = 0; j < word_temp.length(); j++){
+				char compare = word_temp.charAt(j);
+				if(compare == input)
+					key += "1";
+				else
+					key += "0";
+			}
+			
+			String updatedWord = "";
+	   		for(int i = 0; i < key.length(); i++) {
+	   			char compare = key.charAt(i);
+	   			if(compare == '1') {
+	   				updatedWord += input + " ";
+	   			} else {
+	   				updatedWord += word.getText().charAt(i*2) + " ";
+	   			}
+	   		}
+	   		
+	   		word.setText(updatedWord);
+	   		
+	   		if(updatedWord.indexOf('_') < 0)
+	   			youWon();
+   		} else {
+   			button.setTextColor(Color.RED);
+   			button.setEnabled(false);
+   			button.setBackground(this.getResources().getDrawable(R.drawable.roundedgray)); 
+   			
+   			if(nrOfFaults++ < 9)
+   	   			updateHangman(nrOfFaults);
+   	   		else 
+   	   			onBackPressed();
+   		}
+   			
+   		
    	}
    	
    	public ArrayList<String> filterWordsOnLength(ArrayList<String> words, int length) {

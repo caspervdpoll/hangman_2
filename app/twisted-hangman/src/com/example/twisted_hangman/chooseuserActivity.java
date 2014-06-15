@@ -31,7 +31,8 @@ public class chooseuserActivity extends ListActivity {
 	Button newuser;
 	
 	ArrayList<String> usernames = new ArrayList<String>();
- 
+	ArrayList<String> ids = new ArrayList<String>();
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);	
@@ -53,23 +54,13 @@ public class chooseuserActivity extends ListActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 			    // When clicked, show a toast with the TextView text
-				System.out.println(id);
-				user = db.getUserById((int)id);
+				System.out.println(view);
+				User temp = users.get((int)id);	
+
 				Intent intent = new Intent(context, singleplayerActivity.class);
-				System.out.println("yolo");
-				System.out.println(user.getName());
-				System.out.println(user.getGameType());
-				System.out.println(user.getWordLength());
 				
 				Bundle b = new Bundle();
-			    b.putString("name", user.getName());
-			    b.putInt("amount_of_letters", user.getWordLength());
-			    b.putString("type", user.getGameType());
-			    b.putInt("id",(int)id);
-			    
-				System.out.println(b.get("name"));
-				System.out.println(b.get("id"));
-				System.out.println(b.get("amount_of_letters"));
+			    b.putInt("id",temp.getID());
 			    
 			    intent.putExtras(b);
                 startActivity(intent);
