@@ -24,7 +24,9 @@ public class statisticsActivity extends ActionBarActivity {
 		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
 		b = getIntent().getExtras();
 		user = db.getUserById(b.getInt("id"));
-		stats = db.getStatistics(user.getID());
+		stats = db.getStatistics(b.getInt("id"));
+		
+		System.out.println(stats.getWon());
 		
 		played = (TextView) findViewById(R.id.played);
 		played.setText("Played: " + stats.getPlayed());
