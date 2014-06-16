@@ -9,84 +9,47 @@
     tools:ignore="MergeRootFrame" >
 
     <TextView
-        android:id="@+id/hangman"
+        android:id="@+id/hangman_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="18dp"
-        android:text="Twisted Hangman"
+        android:text="Options"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/blue"
         android:textSize="30sp" />
-    
-    <LinearLayout android:id="@+id/name" android:layout_height="wrap_content" android:layout_width="match_parent" 
-	    			android:layout_below="@id/hangman" android:layout_marginTop="15dp" >
 
-        <TextView
-            android:id="@+id/name_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="Name"
-            android:textColor="@color/grey"
-            android:layout_weight="2"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+   <LinearLayout
+       android:id="@+id/difficulty_options"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:layout_below="@id/hangman_options"
+       android:layout_marginTop="30dp" >
 
-        <EditText
-            android:id="@+id/editName"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/white"
-            android:ems="10"
-            android:background="@drawable/backwithborder" >
+       <TextView
+           android:id="@+id/TextView01_options"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="2"
+           android:text="Difficulty"
+           android:textAppearance="?android:attr/textAppearanceMedium"
+           android:textColor="@color/grey" />
+         
+          <SeekBar
+	        android:id="@+id/editDifficulty_options"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="4.56"
+	        android:max="100" />
 
-            <requestFocus />
-        </EditText>
-	    
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/difficulty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/name"
-        android:layout_marginTop="15dp" >
-
-        <TextView
-            android:id="@+id/TextView01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="Difficulty "
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/grey" />
-        
-        <EditText
-            android:id="@+id/editDifficulty"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="30dp"
-            android:ems="10"
-            android:textColor="@color/white"
-            android:background="@drawable/backwithborder"  >
-
-            <requestFocus />
-        </EditText>
-    </LinearLayout>
-    
-
 
     <Button
-        android:id="@+id/go"
+        android:id="@+id/go_options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -100,48 +63,53 @@
         android:textColor="@color/white"
         android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/TextView02"
-        android:layout_width="wrap_content"
+     <LinearLayout
+        android:id="@+id/letter_amount_options"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/go"
-        android:layout_below="@+id/difficulty"
-        android:layout_marginTop="23dp"
-        android:text="type "
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/grey" />
+        android:layout_below="@+id/difficulty_options"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true" >
 
-    <TextView
-        android:id="@+id/letter_amount_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextView02"
-        android:layout_below="@+id/type"
-        android:layout_marginTop="33dp"
-        android:text="Amount of Letters"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/grey" />
+        <TextView
+            android:id="@+id/letter_amount_input_options"
+            android:layout_width="92dp"
+            android:layout_height="45dp"
+            android:text="Amount of Letters"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/grey" />
 
-    <Switch
-        android:id="@+id/type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/amountOfLetters"
-        android:layout_alignTop="@+id/TextView02"
-        android:textOff="Normal"
-        android:textOn="Evil" />
+        <SeekBar
+            android:id="@+id/editLetterAmount_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="24" />
 
-    <EditText
-        android:id="@+id/amountOfLetters"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignBaseline="@+id/letter_amount_input"
-        android:layout_alignBottom="@+id/letter_amount_input"
-        android:layout_alignRight="@+id/go"
-        android:layout_weight="1"
-        android:background="@drawable/backwithborder"
-        android:ems="10"
-        android:textColor="@color/white"
-        android:width="100dp" />
+    </LinearLayout>
+    
+   <LinearLayout
+       android:id="@+id/type_layout_options"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:layout_below="@+id/letter_amount_options"
+       android:layout_marginTop="15dp" >
+
+       <TextView
+           android:id="@+id/TextView02_options"
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="0.19"
+           android:text="Game type "
+           android:textAppearance="?android:attr/textAppearanceMedium"
+           android:textColor="@color/grey" />
+
+       <Switch
+           android:id="@+id/type_options"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textOff="Normal"
+           android:textOn="Evil" />
+   </LinearLayout>
 
 </RelativeLayout>

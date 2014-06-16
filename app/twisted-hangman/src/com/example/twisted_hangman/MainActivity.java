@@ -22,7 +22,7 @@ public class MainActivity extends ActionBarActivity {
 	Button singleplayer;
 	Button options;
 	Button statistics;
-	Button howToPlay;
+	Button changeUser;
 	DatabaseHelper db;
 	Bundle b;
 	
@@ -69,7 +69,8 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View arg0) {
 			    Intent intent = new Intent(context, optionsActivity.class);
-                            startActivity(intent);   
+			    intent.putExtras(b);
+                startActivity(intent);   
  
 			}
 		});
@@ -83,7 +84,8 @@ public class MainActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View arg0) {
 			    Intent intent = new Intent(context, statisticsActivity.class);
-                            startActivity(intent);   
+			    intent.putExtras(b);
+                startActivity(intent);   
  
 			}
 		});
@@ -91,12 +93,12 @@ public class MainActivity extends ActionBarActivity {
 
     public void addListenerOnButtonHowToPlay() {
 		final Context context = this;
-		howToPlay = (Button) findViewById(R.id.howToPlay);
-		howToPlay.setOnClickListener(new OnClickListener() {
+		changeUser = (Button) findViewById(R.id.changeUser);
+		changeUser.setOnClickListener(new OnClickListener() {
  
 			@Override
 			public void onClick(View arg0) {
-			    Intent intent = new Intent(context, howtoplayActivity.class);
+			    Intent intent = new Intent(context, chooseuserActivity.class);
                             startActivity(intent);   
  
 			}

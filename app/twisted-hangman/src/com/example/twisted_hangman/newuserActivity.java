@@ -22,7 +22,8 @@ import android.widget.TextView;
 public class newuserActivity extends ActionBarActivity {
 	
 	Button go;
-	EditText name, difficulty, amount_of_letters;
+	EditText name, difficulty;
+	SeekBar amount_of_letters;
 	DatabaseHelper db;
 	Switch type;
 	String gametype;
@@ -87,7 +88,7 @@ public class newuserActivity extends ActionBarActivity {
                     // TODO Auto-generated method stub
 				
 					count = (int)progress;
-                    value.setText("Letter count: " + count);
+                    value1.setText("Amount of letters: " + count);
 			}
 
 			public void onStartTrackingTouch(SeekBar seekBar)
@@ -111,7 +112,7 @@ public class newuserActivity extends ActionBarActivity {
 		name = (EditText)findViewById(R.id.editName);
 
 		type = (Switch)findViewById(R.id.type);
-		amount_of_letters = (EditText)findViewById(R.id.amountOfLetters);
+		amount_of_letters = (SeekBar)findViewById(R.id.editLetterAmount);
 
 		go.setOnClickListener(new OnClickListener() {
 			
@@ -120,6 +121,7 @@ public class newuserActivity extends ActionBarActivity {
 				db.createUser(name.getText().toString(), diff, 
 						gametype, count, 0.0);
 				user = db.getUserByName(name.getText().toString());
+				db.createStatistics(user.getID());
 				System.out.println(user.getName() + " " + user.getGameType());
 			    Intent intent = new Intent(context, MainActivity.class);
 			    Bundle b = new Bundle();

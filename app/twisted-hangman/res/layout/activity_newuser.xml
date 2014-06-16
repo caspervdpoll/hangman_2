@@ -72,12 +72,8 @@
 	        android:id="@+id/editDifficulty"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignLeft="@+id/TextView02"
-	        android:layout_alignParentRight="true"
-	        android:layout_below="@+id/letter_amount"
 	        android:layout_weight="4.56"
-	        android:max="100"
-	        android:minWidth="250px" />
+	        android:max="100" />
 
     </LinearLayout>
 
@@ -116,8 +112,7 @@
             android:id="@+id/editLetterAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="24"
-            android:minWidth="250px" />
+            android:max="24" />
 
     </LinearLayout>
     
@@ -131,7 +126,7 @@
 
        <TextView
            android:id="@+id/TextView02"
-           android:layout_width="wrap_content"
+           android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="0.19"
            android:text="type "

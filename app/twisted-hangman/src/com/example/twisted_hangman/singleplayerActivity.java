@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Random;
 
 import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
+import com.example.twisted_hangman.sqlite.Statistics;
 import com.example.twisted_hangman.sqlite.User;
 import com.example.twisted_hangman.sqlite.Words_nl;
 
@@ -17,6 +18,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +34,7 @@ public class singleplayerActivity extends ActionBarActivity {
 	int nrOfFaults;
 	Bundle b;
 	User user;
+	Statistics stats;
 	String word_normal = "";
 	String game_type = "";
 	
@@ -50,6 +53,7 @@ public class singleplayerActivity extends ActionBarActivity {
 		Random randomGenerator = new Random();
 		
 		user = db.getUserById(b.getInt("id"));
+		stats = db.getStatistics(user.getID());
 
 		letter_count = user.getWordLength();
 		game_type = user.getGameType();
@@ -100,8 +104,8 @@ public class singleplayerActivity extends ActionBarActivity {
         	wordToPrint += "_ ";
         
         word.setText(wordToPrint);
-        nrOfFaults = 0;
-        updateHangman(0);
+        nrOfFaults = user.getDifficulty();
+        updateHangman(nrOfFaults);
 	}
    	
    	public void onClick(View v) {
@@ -115,12 +119,18 @@ public class singleplayerActivity extends ActionBarActivity {
    	}
    	
    	private void youWon() {
+   		stats.setWon(stats.getWon() + 1);
+   		stats.setPlayed(stats.getPlayed() + 1);
+   		
    		Intent intent = new Intent(this, wonActivity.class);
    		intent.putExtras(b);
         startActivity(intent);
    	}
    	
    	private void youLost() {
+   		stats.setLost(stats.getLost() + 1);
+   		stats.setPlayed(stats.getPlayed() + 1);
+   		
    		System.out.println("i lost");
    		Intent intent = new Intent(this, lostActivity.class);
    		intent.putExtras(b);
@@ -128,8 +138,6 @@ public class singleplayerActivity extends ActionBarActivity {
    	}
    	
    	public void updateHangman(int step) {
-   		int difficulty = user.getDifficulty();
-   		step = step + difficulty;
    		String filename = "step" + step;
    		if(step != 11) {
    			int resID = getResources().getIdentifier(filename, "drawable", getPackageName());
@@ -169,18 +177,21 @@ public class singleplayerActivity extends ActionBarActivity {
 	   		
 	   		if(updatedWord.indexOf('_') < 0)
 	   			youWon();
-   		} else {
-   			button.setTextColor(Color.RED);
-   			button.setEnabled(false);
-   			button.setBackground(this.getResources().getDrawable(R.drawable.roundedgray)); 
+   			} else {
+   				Log.i("1", "in else");
+	   			button.setTextColor(Color.RED);
+	   			button.setEnabled(false);
+	   			button.setBackground(this.getResources().getDrawable(R.drawable.roundedgray)); 
    			
-   			if(nrOfFaults++ < 9)
-   	   			updateHangman(nrOfFaults);
-   	   		else {
-   	   			System.out.println("about to loose");
-   	   			youLost();
-   	   		}
-   		}
+	   			if(nrOfFaults++ < 9) {
+	   				System.out.println(nrOfFaults);
+	   	   			updateHangman(nrOfFaults);
+	   			}
+	   	   		else {
+	   	   			System.out.println("about to loose");
+	   	   			youLost();
+	   	   		}
+	   		}
    			
    		
    	}
@@ -287,7 +298,7 @@ public class singleplayerActivity extends ActionBarActivity {
    		if(nrOfFaults++ < 9)
    			updateHangman(nrOfFaults);
    		else 
-   			onBackPressed();
+   			youLost();
    			
 		return no;
    	}

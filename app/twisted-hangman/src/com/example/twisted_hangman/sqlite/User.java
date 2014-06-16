@@ -81,7 +81,7 @@ public class User {
     	this._word_length = word_length;
     }
     
-    public double getHighsore(){
+    public double getHighscore(){
     	return this._highscore;
     }
     

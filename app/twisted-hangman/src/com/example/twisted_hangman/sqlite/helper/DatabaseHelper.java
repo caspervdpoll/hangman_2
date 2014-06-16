@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+
+import com.example.twisted_hangman.sqlite.Statistics;
 import com.example.twisted_hangman.sqlite.User;
 import com.example.twisted_hangman.sqlite.Words_nl;
 
@@ -199,6 +201,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    return tag_id;
 	}
 	
+	/*public long updateUser(int difficulty, String type, int amount_of_letters, double highscore){
+		SQLiteDatabase db = this.getWritableDatabase();		 
+	    ContentValues values = new ContentValues();
+	    
+	    values.put("difficulty", difficulty);
+	    values.put("type", type);
+	    values.put("word_length", amount_of_letters);
+	    values.put("highscore", highscore);
+	 
+	    
+	    System.out.println(values);
+	    // insert row
+	    long tag_id = db.update("users", null, values);
+	   // System.out.println(tag_id);
+	    return tag_id;
+	}*/
+	
 	/*
 	 * fetch word by id
 	 */
@@ -263,5 +282,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		return user;
 		
+	}
+	
+	public Statistics getStatistics(int user_id) {
+		int temp = 0;
+		Statistics stats = new Statistics();
+		
+		String Query = "SELECT rowid, * FROM statistics WHERE user_id = '" + user_id + "'";
+		SQLiteDatabase db = this.getReadableDatabase();
+	    Cursor c = db.rawQuery(Query, null);
+	    if (c != null && c.getCount() >0 && c.moveToFirst()) {
+            do {
+            	 temp = Integer.parseInt(c.getString(0));
+            	 stats.setID(temp);
+                 stats.setPlayed(c.getInt(1));
+                 stats.setLost(c.getInt(2));
+                 stats.setWon(c.getInt(3)); 
+            } while (c.moveToNext());
+        }
+	    
+	    c.close();
+		return stats;
+	}
+	
+	public long createStatistics(int user_id){
+		SQLiteDatabase db = this.getWritableDatabase();		 
+	    ContentValues values = new ContentValues();
+	    
+	    values.put("played", 0);
+	    values.put("lost", 0);
+	    values.put("won", 0);
+	    values.put("difficulty", 0);
+	    values.put("user_id", user_id);
+	 
+	    
+	    System.out.println(values);
+	    // insert row
+	    long tag_id = db.insert("statistics", null, values);
+	   // System.out.println(tag_id);
+	    return tag_id;
 	}
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
@@ -9,7 +9,7 @@
     tools:ignore="MergeRootFrame"
     android:padding="15dp" >
 
-   <LinearLayout
+   <RelativeLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:orientation="vertical" >
@@ -24,13 +24,43 @@
            android:gravity="center"/>
 
        <TextView
-           android:id="@+id/highscores"
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:background="@color/white"
-           android:text="STATISTICS"
-           android:layout_weight="1.0" />
+           android:id="@+id/played"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_alignParentRight="true"
+           android:layout_below="@+id/statistics"
+           android:layout_marginTop="42dp"
+           android:textColor="@color/blue" />
 
-   </LinearLayout>
+       <TextView
+           android:id="@+id/won"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_below="@+id/played"
+           android:layout_marginTop="27dp"
+           android:textColor="@color/blue" />
 
-</LinearLayout>
+       <TextView
+           android:id="@+id/lost"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_below="@+id/won"
+           android:layout_marginTop="27dp"
+           android:textColor="@color/blue" />
+       
+       <TextView
+           android:id="@+id/highscore"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentLeft="true"
+           android:layout_below="@+id/lost"
+           android:layout_marginTop="27dp"
+           android:textColor="@color/blue" />
+       
+
+   </RelativeLayout>
+
+</RelativeLayout>
