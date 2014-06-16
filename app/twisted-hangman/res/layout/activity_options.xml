@@ -16,7 +16,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="18dp"
-        android:text="Options"
+        android:text="@string/options"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/blue"
@@ -35,7 +35,7 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_weight="2"
-           android:text="Difficulty"
+           android:text="@string/difficulty"
            android:textAppearance="?android:attr/textAppearanceMedium"
            android:textColor="@color/grey" />
          
@@ -59,7 +59,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/rounded"
-        android:text="Save"
+        android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="30sp" />
 
@@ -75,7 +75,7 @@
             android:id="@+id/letter_amount_input_options"
             android:layout_width="92dp"
             android:layout_height="45dp"
-            android:text="Amount of Letters"
+            android:text="@string/letters"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/grey" />
 
@@ -100,7 +100,7 @@
            android:layout_width="0dp"
            android:layout_height="wrap_content"
            android:layout_weight="0.19"
-           android:text="Game type "
+           android:text="@string/type"
            android:textAppearance="?android:attr/textAppearanceMedium"
            android:textColor="@color/grey" />
 

@@ -3,7 +3,23 @@
 
     <string name="app_name">Twisted Hangman</string>
     <string name="action_settings">Settings</string>
-    
+    <string name="singleplayer">Singleplayer</string>
+    <string name="options">Options</string>
+    <string name="statistics">Statistics</string>
+    <string name="change_user">Change user</string>
+    <string name="twisted_hangman">Twisted Hangman</string>
+    <string name="back_to_menu">Back to menu</string>
+    <string name="lost">You lost!</string>
+    <string name="coffin">coffin</string>
+    <string name="name">Name</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="lets_go">Let\'s go!</string>
+    <string name="letters">Amount of letters</string>
+    <string name="type">Type</string>
+    <string name="save">Save</string>
+    <string name="won">You won!</string>
+    <string name="beat">try to beat the</string>
+    <string name="hello">Hello, </string>
     <color name="blue">#0099CC</color>
 	<color name="darkBlue">#000033</color>
 	<color name="white">#FFFFFF</color>

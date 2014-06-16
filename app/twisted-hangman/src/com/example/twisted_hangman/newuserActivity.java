@@ -38,6 +38,7 @@ public class newuserActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_newuser);
 		addListenerOnButtonGo();
 		
+		// Determine gametype
 		gametype = "evil";
 		type = (Switch) findViewById(R.id.type);
 		
@@ -52,6 +53,7 @@ public class newuserActivity extends ActionBarActivity {
 			});
 		}
 		
+		// Get both seekbars for setting difficulty and word length
 		value = (TextView) findViewById(R.id.TextView01);
 		seekbar = (SeekBar) findViewById(R.id.editDifficulty);
 		        
@@ -116,6 +118,7 @@ public class newuserActivity extends ActionBarActivity {
 
 		go.setOnClickListener(new OnClickListener() {
 			
+			//Actually creating the new user
 			@Override
 			public void onClick(View arg0) {
 				db.createUser(name.getText().toString(), diff, 

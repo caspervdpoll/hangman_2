@@ -11,6 +11,7 @@
 
     <ImageView
         android:id="@+id/imageView1"
+        android:contentDescription="@string/coffin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -24,7 +25,7 @@
         android:layout_above="@+id/imageView1"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:text="You lost!"
+        android:text="@string/lost"
         android:textColor="@color/blue"
         android:textSize="50sp" />
 
@@ -37,7 +38,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="16dp"
         android:background="@drawable/rounded"
-        android:text="Back to menu"
+        android:text="@string/back_to_menu"
         android:textColor="@color/white" />
 
 </RelativeLayout>

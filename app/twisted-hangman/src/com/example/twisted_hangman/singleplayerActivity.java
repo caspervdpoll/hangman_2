@@ -1,6 +1,5 @@
 package com.example.twisted_hangman;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,13 +8,8 @@ import java.util.Random;
 import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
 import com.example.twisted_hangman.sqlite.Statistics;
 import com.example.twisted_hangman.sqlite.User;
-import com.example.twisted_hangman.sqlite.Words_nl;
-
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -24,7 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
+/* The actual game activity, this handles the words and hangman imageview */
 public class singleplayerActivity extends ActionBarActivity {
 	ArrayList<String> words;
 	DatabaseHelper db;
@@ -60,6 +54,7 @@ public class singleplayerActivity extends ActionBarActivity {
 		
 		words = db.getAllWords(letter_count);
 
+		// If game type is normal a random word must be chosen
 		if(game_type.equals("normal")){
 
 			//random number generator
@@ -104,6 +99,8 @@ public class singleplayerActivity extends ActionBarActivity {
         	wordToPrint += "_ ";
         
         word.setText(wordToPrint);
+        
+        // Set nrOfFaults to difficulty and update the imageview according to the difficulty
         nrOfFaults = user.getDifficulty();
         updateHangman(nrOfFaults);
 	}
@@ -118,6 +115,7 @@ public class singleplayerActivity extends ActionBarActivity {
    			filterWord(word_normal, buttonText.charAt(0), b);
    	}
    	
+   	// Start won activity
    	private void youWon() {
    		stats.setWon(stats.getWon() + 1);
    		stats.setPlayed(stats.getPlayed() + 1);
@@ -127,16 +125,17 @@ public class singleplayerActivity extends ActionBarActivity {
         startActivity(intent);
    	}
    	
+   	// Start lost activity
    	private void youLost() {
    		stats.setLost(stats.getLost() + 1);
    		stats.setPlayed(stats.getPlayed() + 1);
    		
-   		System.out.println("i lost");
    		Intent intent = new Intent(this, lostActivity.class);
    		intent.putExtras(b);
         startActivity(intent);
    	}
    	
+   	// Update the view, set source for imageview
    	public void updateHangman(int step) {
    		String filename = "step" + step;
    		if(step != 11) {
@@ -184,11 +183,9 @@ public class singleplayerActivity extends ActionBarActivity {
 	   			button.setBackground(this.getResources().getDrawable(R.drawable.roundedgray)); 
    			
 	   			if(nrOfFaults++ < 9) {
-	   				System.out.println(nrOfFaults);
 	   	   			updateHangman(nrOfFaults);
 	   			}
 	   	   		else {
-	   	   			System.out.println("about to loose");
 	   	   			youLost();
 	   	   		}
 	   		}

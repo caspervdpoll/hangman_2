@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-
+/* Congratulations, you beat the hangman */
 public class wonActivity extends ActionBarActivity {
 	Button back;
 	Bundle b;

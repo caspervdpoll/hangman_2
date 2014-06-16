@@ -1,5 +1,6 @@
 package com.example.twisted_hangman.sqlite;
 
+/* Class to represent the user from database */
 public class User {
 	
 	int _id;

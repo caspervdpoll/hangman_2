@@ -1,5 +1,6 @@
 package com.example.twisted_hangman.sqlite;
 
+/* Class to represent the words from database */
 public class Words_nl {
 	int _id;
     String _value;

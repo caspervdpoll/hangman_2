@@ -1,7 +1,5 @@
 package com.example.twisted_hangman;
 
-import java.io.IOException;
-
 import com.example.twisted_hangman.sqlite.helper.DatabaseHelper;
 
 import android.support.v7.app.ActionBarActivity;
@@ -17,6 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 
+/* Main menu, this activity provides the user with 4 buttons,
+ * Singleplayer, Options, Statistics and change user.
+ * The right activities are called for.
+ */
 public class MainActivity extends ActionBarActivity {
 	
 	Button singleplayer;

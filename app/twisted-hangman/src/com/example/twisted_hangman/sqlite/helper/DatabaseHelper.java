@@ -19,6 +19,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/* Class which contains the database communication */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static String DB_PATH = "/data/data/com.example.twisted_hangman/databases/";
@@ -26,19 +27,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private SQLiteDatabase myDataBase; 
     private final Context myContext;
     
+    // Constructor
     public DatabaseHelper(Context context, String name, CursorFactory factory,
 			int version) {
 		super(context, name, factory, version);
 		this.myContext = context;
 	}
-	  /**
-	     * Creates a empty database on the system and rewrites it with your own database.
-	     * */
+    
+    /*
+     * Creates a empty database on the system and rewrites it with your own database.
+     */
     public void createDataBase() throws IOException{
  
     	boolean dbExist = checkDataBase();
     	//copyDataBase(); //Uncomment this when the database already exists, but isn't filled
-    	//System.out.println(dbExist);
     	if(dbExist){
     		//Database exists
     	} else {
@@ -52,10 +54,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
  
     }
 	 
-	    /**
-	     * Check if the database already exist to avoid re-copying the file each time you open the application.
-	     * @return true if it exists, false if it doesn't
-	     */
+    /*
+     * Check if the database already exist to avoid re-copying the file each time you open the application.
+     */
     private boolean checkDataBase(){
  
     	SQLiteDatabase checkDB = null;
@@ -74,11 +75,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     	return checkDB != null ? true : false;
     }
 	 
-    /**
+    /*
      * Copies your database from your local assets-folder to the just created empty database in the
      * system folder, from where it can be accessed and handled.
      * This is done by transfering bytestream.
-     * */
+     */
     private void copyDataBase() throws IOException{
  
     	//Open your local db as the input stream
@@ -102,13 +103,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     	myOutput.flush();
     	myOutput.close();
     	myInput.close();
- }
-	 
+    }
+	
+    // Open the database
     public void openDataBase() throws SQLException{
         String myPath = DB_PATH + DB_NAME;
     	myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
     }
-	 
+	
+    // Close the database
     @Override
 	public synchronized void close() {
  
@@ -123,7 +126,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
  
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
-	 
+	
+	// Get all the words from db
 	public ArrayList<String> getAllWords(int word_length) { 
         ArrayList<String> wordList = new ArrayList<String>();
         // Select All Query
@@ -144,6 +148,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return wordList;
 	}
 	
+	// Get all users from db
 	public ArrayList<User> getAllUsers() { 
         ArrayList<User> userList = new ArrayList<User>();
         // Select All Query
@@ -164,25 +169,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        System.out.println("na de query" + userList);
+        
         return userList;
 	}
 	
-	/*
-	 * Creating wordtag
-	 */
-	public long createWord(String word) {
-	    SQLiteDatabase db = this.getWritableDatabase();
-	 
-	    ContentValues values = new ContentValues();
-	    int length = word.length();
-	    
-	    values.put("value", word);
-	    values.put("letter_count", length);
-	 
-	    return 1;
-	}
-	
+	// Insert new user into database	
 	public long createUser(String name, int difficulty, String type, int amount_of_letters, double highscore){
 		SQLiteDatabase db = this.getWritableDatabase();		 
 	    ContentValues values = new ContentValues();
@@ -193,11 +184,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    values.put("word_length", amount_of_letters);
 	    values.put("highscore", highscore);
 	 
-	    
-	    System.out.println(values);
-	    // insert row
 	    long tag_id = db.insert("users", null, values);
-	   // System.out.println(tag_id);
 	    return tag_id;
 	}
 	
@@ -218,10 +205,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    return tag_id;
 	}*/
 	
-	/*
-	 * fetch word by id
-	 */
-	
+	// Get a single word by its id
 	public String getWordById(int id){
 		
 		String Query = "SELECT * FROM " + " WHERE id = '" + id + "'";
@@ -238,6 +222,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return temp;
 	}
 	
+	// Get user by its name
 	public User getUserByName(String name){
 		int temp = 0;
 		String Query = "SELECT rowid, * FROM users WHERE name = '" + name + "'";
@@ -260,6 +245,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return user;
 	}
 	
+	// Get user by its ID
 	public User getUserById(int id){
 		int temp = 0;
 		String Query = "SELECT * FROM users WHERE rowid = '" + id + "'";
@@ -284,6 +270,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		
 	}
 	
+	// Get the user's statistics
 	public Statistics getStatistics(int user_id) {
 		int temp = 0;
 		Statistics stats = new Statistics();
@@ -305,6 +292,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return stats;
 	}
 	
+	// Create user's statistics, is called upon creating the user and sets everything to 0
 	public long createStatistics(int user_id){
 		SQLiteDatabase db = this.getWritableDatabase();		 
 	    ContentValues values = new ContentValues();
@@ -315,11 +303,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    values.put("difficulty", 0);
 	    values.put("user_id", user_id);
 	 
-	    
-	    System.out.println(values);
-	    // insert row
 	    long tag_id = db.insert("statistics", null, values);
-	   // System.out.println(tag_id);
 	    return tag_id;
 	}
 }

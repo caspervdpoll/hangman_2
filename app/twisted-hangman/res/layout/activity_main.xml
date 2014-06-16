@@ -16,7 +16,7 @@
         android:layout_marginLeft="15sp"
         android:layout_marginRight="15sp"
         android:background="@drawable/rounded"
-        android:text="Singleplayer"
+        android:text="@string/singleplayer"
         android:textColor="@color/white"
         android:radius="6dp"
         android:textSize="25sp" />
@@ -28,9 +28,8 @@
         android:layout_above="@+id/singleplayer"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="41dp"
-        android:layout_weight="1.08"
         android:gravity="center"
-        android:text="Twisted Hangman"
+        android:text="@string/twisted_hangman"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/blue"
         android:textSize="30sp" />
@@ -43,7 +42,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="29dp"
         android:gravity="center"
-        android:text="try to beat the"
+        android:text="@string/beat"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/blue"
         android:textSize="20sp" />
@@ -55,9 +54,8 @@
         android:layout_above="@+id/beat"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"
-        android:layout_weight="1.08"
         android:gravity="center"
-        android:text="Hello,"
+        android:text="@string/hello"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/blue"
         android:textSize="20sp" />
@@ -73,7 +71,7 @@
         android:layout_marginLeft="15sp"
         android:layout_marginRight="15sp"
         android:radius="6dp"
-        android:text="Options"
+        android:text="@string/options"
         android:textColor="@color/white"
         android:textSize="25sp" />
      
@@ -88,7 +86,7 @@
         android:layout_marginLeft="15sp"
         android:layout_marginRight="15sp"
         android:radius="6dp"
-        android:text="Statistics"
+        android:text="@string/statistics"
         android:textColor="@color/white"
         android:textSize="25sp" />
      
@@ -103,7 +101,7 @@
         android:layout_marginRight="15sp"
         android:layout_marginTop="10dp"
         android:radius="6dp"
-        android:text="Change user"
+        android:text="@string/change_user"
         android:textColor="@color/white"
         android:textSize="25sp" />
 </RelativeLayout>

@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
 
-
+/* Activity to show the users statistics*/
 public class statisticsActivity extends ActionBarActivity {
 	DatabaseHelper db;
 	Bundle b;

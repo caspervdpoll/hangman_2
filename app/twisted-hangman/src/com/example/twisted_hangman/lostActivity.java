@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-
+/* Activity that says the player lost */
 public class lostActivity extends ActionBarActivity {
 	Button back;
 	Bundle b;

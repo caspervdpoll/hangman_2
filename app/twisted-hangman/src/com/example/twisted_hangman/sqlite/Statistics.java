@@ -1,5 +1,6 @@
 package com.example.twisted_hangman.sqlite;
 
+/* Class to represent the statistics from database */
 public class Statistics {
 	int _id;
     int _played;

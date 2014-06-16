@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
-
+/* Options can be changed in this activity */
 public class optionsActivity extends ActionBarActivity {
 	DatabaseHelper db;
 	Bundle b;
@@ -41,15 +41,16 @@ public class optionsActivity extends ActionBarActivity {
 		
 		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
 		
+		// Get the argument given from MainActivity
 		b = getIntent().getExtras();
 		
+		// Get the users options
 		user = db.getUserById(b.getInt("id"));
-				
 		gametype = user.getGameType();
 		diff_option = user.getDifficulty();
 		letters_option = user.getWordLength();
 		
-		
+		// Set the gametype
 		checked = gametype.equals("normal") ? false : true;
 		type = (Switch) findViewById(R.id.type_options);
 		type.setChecked(checked);
@@ -65,6 +66,7 @@ public class optionsActivity extends ActionBarActivity {
 			});
 		}
 		
+		// Set difficulty and wordlength
 		value = (TextView) findViewById(R.id.TextView01_options);
 		seekbar = (SeekBar) findViewById(R.id.editDifficulty_options);
 		seekbar.setProgress(diff_option);
@@ -132,6 +134,7 @@ public class optionsActivity extends ActionBarActivity {
 
 		go.setOnClickListener(new OnClickListener() {
 			
+			// Update the user
 			@Override
 			public void onClick(View arg0) {
 				//db.createUser(name.getText().toString(), diff, 

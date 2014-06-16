@@ -12,13 +12,14 @@
    <RelativeLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:orientation="vertical" >
+       android:orientation="vertical"
+        android:background="@color/darkBlue" >
 
        <TextView
            android:id="@+id/statistics"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:text="Statistics"
+           android:text="@string/statistics"
            android:textAppearance="?android:attr/textAppearanceLarge" 
            android:textColor="@color/blue"
            android:gravity="center"/>
