@@ -24,7 +24,7 @@ public class optionsActivity extends ActionBarActivity {
 	Bundle b;
 	User user;
 	Button go;
-	EditText difficulty;
+	EditText difficulty, name;
 	SeekBar amount_of_letters;
 	Switch type;
 	String gametype;
@@ -35,22 +35,23 @@ public class optionsActivity extends ActionBarActivity {
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_options);
-		addListenerOnButtonGo();
-		
-		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
 		
 		// Get the argument given from MainActivity
 		b = getIntent().getExtras();
-		
-		// Get the users options
+		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
+
 		user = db.getUserById(b.getInt("id"));
+
+		addListenerOnButtonGo();
+		
+				
 		gametype = user.getGameType();
 		diff_option = user.getDifficulty();
-		letters_option = user.getWordLength();
+		letters_option = user.getWordLength();		
 		
-		// Set the gametype
 		checked = gametype.equals("normal") ? false : true;
 		type = (Switch) findViewById(R.id.type_options);
 		type.setChecked(checked);
@@ -58,10 +59,11 @@ public class optionsActivity extends ActionBarActivity {
 		if (type != null) {
 			type.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					gametype = "evil";
+					gametype = "normal";
 					if(isChecked){
-						gametype = "normal";
+						gametype = "evil";
 					}
+					System.out.println(gametype);
 				}
 			});
 		}
@@ -83,8 +85,8 @@ public class optionsActivity extends ActionBarActivity {
 			{
                     // TODO Auto-generated method stub
 				
-					diff = (int)progress/10;
-                    value.setText("Difficulty: " + diff);
+					diff_option = (int)progress/10;
+                    value.setText("Difficulty: " + diff_option);
 			}
 
 			public void onStartTrackingTouch(SeekBar seekBar)
@@ -106,8 +108,8 @@ public class optionsActivity extends ActionBarActivity {
 			{
                     // TODO Auto-generated method stub
 				
-					count = (int)progress;
-                    value1.setText("Amount of letters: " + count);
+					letters_option = (int)progress;
+                    value1.setText("Amount of letters: " + letters_option);
 			}
 
 			public void onStartTrackingTouch(SeekBar seekBar)
@@ -126,24 +128,22 @@ public class optionsActivity extends ActionBarActivity {
 	}
 	
 	public void addListenerOnButtonGo() {
-		final Context context = this;
-		go = (Button) findViewById(R.id.go_options);
-
-		type = (Switch)findViewById(R.id.type_options);
-		amount_of_letters = (SeekBar)findViewById(R.id.editLetterAmount_options);
-
+		
+		final Context context = this;		
+		
+		go = (Button) findViewById(R.id.go_options);	
 		go.setOnClickListener(new OnClickListener() {
-			
-			// Update the user
+
 			@Override
 			public void onClick(View arg0) {
-				//db.createUser(name.getText().toString(), diff, 
-						//gametype, count, 0.0);
-				//user = db.getUserByName(name.getText().toString());
-				System.out.println(user.getName() + " " + user.getGameType());
+				
+				user.setWordLength(letters_option);
+				user.setGameType(gametype);
+				user.setDifficulty(diff_option);
+				db.updateUser(user, b.getInt("id"));
+				
 			    Intent intent = new Intent(context, MainActivity.class);
-			    Bundle b = new Bundle();
-			    b.putInt("id", user.getID());
+ 
 			    intent.putExtras(b);
                 startActivity(intent);   
  

@@ -35,6 +35,7 @@ public class MainActivity extends ActionBarActivity {
 
 		db = new DatabaseHelper(getApplicationContext(), "hangman", null, 2);
 		b = getIntent().getExtras();
+		
 		        
         addListenerOnButtonSingleplayer();
         addListenerOnButtonOptions();

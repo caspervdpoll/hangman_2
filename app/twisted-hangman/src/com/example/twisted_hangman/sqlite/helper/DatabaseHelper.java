@@ -40,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void createDataBase() throws IOException{
  
     	boolean dbExist = checkDataBase();
-    	//copyDataBase(); //Uncomment this when the database already exists, but isn't filled
+    	copyDataBase(); //Uncomment this when the database already exists, but isn't filled
     	if(dbExist){
     		//Database exists
     	} else {
@@ -188,22 +188,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	    return tag_id;
 	}
 	
-	/*public long updateUser(int difficulty, String type, int amount_of_letters, double highscore){
+	public long updateUser(User user, int id){
 		SQLiteDatabase db = this.getWritableDatabase();		 
 	    ContentValues values = new ContentValues();
 	    
-	    values.put("difficulty", difficulty);
-	    values.put("type", type);
-	    values.put("word_length", amount_of_letters);
-	    values.put("highscore", highscore);
-	 
+	    values.put("difficulty", user.getDifficulty());
+	    values.put("type", user.getGameType());
+	    values.put("word_length", user.getWordLength());	 
 	    
 	    System.out.println(values);
 	    // insert row
-	    long tag_id = db.update("users", null, values);
+	    long tag_id = db.update("users", values, "rowid = ?", new String[] {String.valueOf(id)});
 	   // System.out.println(tag_id);
 	    return tag_id;
-	}*/
+	}
+	
+	public void updateStats(Statistics stat, int id){
+		SQLiteDatabase db = this.getWritableDatabase();		 
+	    ContentValues values = new ContentValues();
+		
+	    values.put("won", stat.getWon());
+	    values.put("lost", stat.getLost());
+	    values.put("played", stat.getPlayed());
+	    
+	    db.update("statistics", values, "user_id = ?", new String[] {String.valueOf(id)});
+	    
+	    
+	}
+	
+	public void updateHighscore(int id, double highscore){
+		SQLiteDatabase db = this.getWritableDatabase();		 
+	    ContentValues values = new ContentValues();
+		
+		values.put("highscore", highscore);
+		
+		db.update("users", values, "rowid = ?", new String[] {String.valueOf(id)});
+		
+	}
 	
 	// Get a single word by its id
 	public String getWordById(int id){
@@ -248,19 +269,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	// Get user by its ID
 	public User getUserById(int id){
 		int temp = 0;
-		String Query = "SELECT * FROM users WHERE rowid = '" + id + "'";
+		String Query = "SELECT rowid, * FROM users WHERE rowid = '" + id + "'";
 		User user = new User();
 		SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor c = db.rawQuery(Query, null);
 
 	    if (c != null && c.getCount() >0 && c.moveToFirst()) {
             do {
+            	 temp = Integer.parseInt(c.getString(0));
                  user.setID(temp);
-                 user.setName(c.getString(1));
-                 user.setDifficulty(c.getInt(2));
-                 user.setGameType(c.getString(3)); 
-                 user.setWordLength(c.getInt(4));
-                 user.setHighscore(c.getDouble(5));
+                 user.setName(c.getString(2));
+                 user.setDifficulty(c.getInt(3));
+                 user.setGameType(c.getString(4)); 
+                 user.setWordLength(c.getInt(5));
+                 user.setHighscore(c.getDouble(6));
             } while (c.moveToNext());
         }
 	    
@@ -278,13 +300,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String Query = "SELECT rowid, * FROM statistics WHERE user_id = '" + user_id + "'";
 		SQLiteDatabase db = this.getReadableDatabase();
 	    Cursor c = db.rawQuery(Query, null);
+
 	    if (c != null && c.getCount() >0 && c.moveToFirst()) {
             do {
-            	 temp = Integer.parseInt(c.getString(0));
-            	 stats.setID(temp);
-                 stats.setPlayed(c.getInt(1));
-                 stats.setLost(c.getInt(2));
-                 stats.setWon(c.getInt(3)); 
+        	    System.out.println(c.getInt(2));
+        	    System.out.println(c.getInt(3));
+        	    System.out.println(c.getInt(4));
+				temp = Integer.parseInt(c.getString(0));
+				stats.setID(temp);
+				stats.setPlayed(c.getInt(2));
+				stats.setLost(c.getInt(3));
+				stats.setWon(c.getInt(4)); 
             } while (c.moveToNext());
         }
 	    

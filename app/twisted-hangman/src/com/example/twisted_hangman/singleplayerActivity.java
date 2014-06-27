@@ -106,19 +106,31 @@ public class singleplayerActivity extends ActionBarActivity {
 	}
    	
    	public void onClick(View v) {
-
+   		System.out.println("on click");
    		Button b = (Button)v;
    		String buttonText = b.getText().toString();
-   		if(game_type.equals("evil"))
-   			filterWords(words, buttonText.charAt(0), b);
+   		if(game_type.equals("evil")){
+   			words = filterWords(words, buttonText.charAt(0), b);
+   			System.out.println(words);
+   		}
    		else
    			filterWord(word_normal, buttonText.charAt(0), b);
+   		
+   		
    	}
    	
    	// Start won activity
    	private void youWon() {
    		stats.setWon(stats.getWon() + 1);
    		stats.setPlayed(stats.getPlayed() + 1);
+
+   		db.updateStats(stats, b.getInt("id"));
+   		
+   		double new_highscore = ((double)((nrOfFaults - 1) + user.getDifficulty())) / user.getWordLength();
+   		double highscore = user.getHighscore();
+   		if(highscore > new_highscore){
+   			db.updateHighscore(b.getInt("id"), new_highscore);
+   		}   		
    		
    		Intent intent = new Intent(this, wonActivity.class);
    		intent.putExtras(b);
@@ -144,9 +156,8 @@ public class singleplayerActivity extends ActionBarActivity {
    		}
    	}
    	
+   	//Check the word for chosen letter.
    	public void filterWord(String word_temp, char input, Button button){
-   		System.out.println(word_temp);
-   		System.out.println(input);
    		String key = "";
    		if(word_temp.indexOf(input) >= 0){
    			
@@ -154,6 +165,7 @@ public class singleplayerActivity extends ActionBarActivity {
    			button.setEnabled(false);
    			button.setBackground(this.getResources().getDrawable(R.drawable.roundedgray));
   			
+   			//loop through word find correct letters. And create a "binary" key which say where the found letters are.
 			for(int j = 0; j < word_temp.length(); j++){
 				char compare = word_temp.charAt(j);
 				if(compare == input)
@@ -162,6 +174,7 @@ public class singleplayerActivity extends ActionBarActivity {
 					key += "0";
 			}
 			
+			//update the word in the top of screen based on the "binary" key which was supplied.
 			String updatedWord = "";
 	   		for(int i = 0; i < key.length(); i++) {
 	   			char compare = key.charAt(i);
@@ -174,21 +187,21 @@ public class singleplayerActivity extends ActionBarActivity {
 	   		
 	   		word.setText(updatedWord);
 	   		
-	   		if(updatedWord.indexOf('_') < 0)
+	   		if(updatedWord.indexOf('_') < 0){
 	   			youWon();
-   			} else {
-   				Log.i("1", "in else");
-	   			button.setTextColor(Color.RED);
-	   			button.setEnabled(false);
-	   			button.setBackground(this.getResources().getDrawable(R.drawable.roundedgray)); 
-   			
-	   			if(nrOfFaults++ < 9) {
-	   	   			updateHangman(nrOfFaults);
-	   			}
-	   	   		else {
-	   	   			youLost();
-	   	   		}
 	   		}
+		} else {
+   			button.setTextColor(Color.RED);
+   			button.setEnabled(false);
+   			button.setBackground(this.getResources().getDrawable(R.drawable.roundedgray)); 
+		
+   			if(nrOfFaults++ < 9) {
+   	   			updateHangman(nrOfFaults);
+   			}
+   	   		else {
+   	   			youLost();
+   	   		}
+   		}
    			
    		
    	}
@@ -204,14 +217,17 @@ public class singleplayerActivity extends ActionBarActivity {
    		return result;
    	}
    	
+   	//filter words on char, This function is used for the evil gamemode. Arraylist of words is presented and filtered on the letters.
    	public ArrayList<String> filterOnChar(ArrayList<String> words, char input) {
    		ArrayList<String> result = null;
    		Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
    		int max = 0;
    		String maxKey = "";
+   		//test if the array is bigger than one in which case we do not need to create or alter the list.
    		if(words.size() > 1) {
 	   		for(int i = 0; i < words.size(); i++){
 	   			String key = "";
+	   			//create key for word.
 	   			for(int j = 0; j < words.get(i).length(); j++){
 	   				char compare = words.get(i).charAt(j);
 	   				if(compare == input)
@@ -219,6 +235,7 @@ public class singleplayerActivity extends ActionBarActivity {
 	   				else
 	   					key += "0";
 	   			}
+	   			//check if the new map has this key, if so push the word to its array.
 	   			if(map.containsKey(key)){
 	   				ArrayList<String> temp = map.get(key);
 	   				temp.add(words.get(i));
@@ -240,7 +257,7 @@ public class singleplayerActivity extends ActionBarActivity {
    			map.put(key, words);
    		}
    		
-  		
+  		//check for the biggest array in the map.
    		for(Map.Entry<String, ArrayList<String>> entry : map.entrySet()) {
    			if(map.get(entry.getKey()).size() > max) {
    				max = map.get(entry.getKey()).size();
@@ -250,7 +267,7 @@ public class singleplayerActivity extends ActionBarActivity {
    		}
    		
 
-   		
+   		//update the word
    		String updatedWord = "";
    		for(int i = 0; i < maxKey.length(); i++) {
    			char compare = maxKey.charAt(i);
@@ -269,6 +286,8 @@ public class singleplayerActivity extends ActionBarActivity {
    		return result;
    	}
    	
+   	//check all the words for the character create two lists, one with words containing 
+   	//said character one without words containing said character
    	public ArrayList<String> filterWords(ArrayList<String> words, char input, Button pressed) {
    		ArrayList<String> yes, no, result;
    		yes = new ArrayList<String>();
@@ -280,7 +299,7 @@ public class singleplayerActivity extends ActionBarActivity {
    				no.add(words.get(i));
    			}
    		}
-   		
+   		//which is bigger?
    		if(yes.size() > no.size()) {
    			pressed.setTextColor(Color.GREEN);
    			pressed.setEnabled(false);

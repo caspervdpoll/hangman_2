@@ -122,7 +122,7 @@ public class newuserActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View arg0) {
 				db.createUser(name.getText().toString(), diff, 
-						gametype, count, 0.0);
+						gametype, count, 10.0);
 				user = db.getUserByName(name.getText().toString());
 				db.createStatistics(user.getID());
 				System.out.println(user.getName() + " " + user.getGameType());
