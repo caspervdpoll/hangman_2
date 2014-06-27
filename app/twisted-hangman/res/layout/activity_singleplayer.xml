@@ -120,19 +120,5 @@
 	        	android:background="@drawable/rounded" android:layout_marginLeft="4dp" android:layout_marginRight="45dp"/>
 	</LinearLayout>
 
-	<EditText
-	    android:id="@+id/guess"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/SZ"
-	    android:layout_marginLeft="15dp"
-	    android:layout_marginRight="15dp"
-	    android:hint="Guess the word: "
-	    android:ems="10" >
-
-	    <requestFocus />
-	</EditText>
 	
 </RelativeLayout>
